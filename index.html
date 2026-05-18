@@ -139,12 +139,16 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
   </div>
   <div id="tabs">
     <button class="tab active" onclick="showTab('route')">🗺️ Route</button>
+    <button class="tab" onclick="showTab('today')">📅 Heute</button>
     <button class="tab" onclick="showTab('stops')">📍 Orte</button>
     <button class="tab" onclick="showTab('dist')">🚗 Zeiten</button>
     <button class="tab" onclick="showTab('acc')">🏨 Unterkunft</button>
     <button class="tab" onclick="showTab('wx')">🌤️ Wetter</button>
     <button class="tab" onclick="showTab('map')">🛰️ Karte</button>
     <button class="tab" onclick="showTab('markets')">🛒 Märkte</button>
+    <button class="tab" onclick="showTab('language')">🗣️ Albanisch</button>
+    <button class="tab" onclick="showTab('exchange')">💶 Kurs</button>
+    <button class="tab" onclick="showTab('checklist')">✅ Packliste</button>
     <button class="tab" onclick="showTab('tips')">💡 Tipps</button>
   </div>
   <div id="ct"></div>
@@ -174,7 +178,7 @@ function checkPw(){
     screen.style.opacity='0';
     setTimeout(function(){ screen.style.display='none'; },400);
   } else {
-    error.textContent = 'Falsches Passwort — bitte nochmal versuchen';
+    error.textContent = 'Falsches Passwort -- bitte nochmal versuchen';
     input.classList.add('error');
     input.value='';
     setTimeout(function(){ input.classList.remove('error'); },400);
@@ -204,170 +208,170 @@ function togglePwVis(){
 
 
 var STOPS = [
-  {id:"t1",city:"Tirana",emoji:"🏙️",color:"#C8A96E",dates:"12.06–15.06",nights:3,
+  {id:"t1",city:"Tirana",emoji:"🏙",color:"#C8A96E",dates:"12.06-15.06",nights:3,
    address:"8RH5+4WV, Rruga e Kavajës",checkin:"15:00",checkout:"10:00",platform:"Airbnb",
    activities:[
-     {n:"Bunk'Art 1 & 2",t:"Kultur",p:"Museen in Bunkeranlagen — unverzichtbar"},
+     {n:"Bunk'Art 1 & 2",t:"Kultur",p:"Museen in Bunkeranlagen -- unverzichtbar"},
      {n:"Skanderbeg-Platz",t:"Sehenswürdigkeit",p:"Abends am schönsten"},
      {n:"Blloku-Viertel",t:"Essen & Trinken",p:"Ehemaliges Kommunisten-Viertel, heute hip"},
      {n:"Bovilla-Stausee",t:"Natur",p:"~1 Std. nördlich, perfekter Halbtagesausflug"},
      {n:"Nationales Historisches Museum",t:"Kultur",p:"Riesiges Mosaik an der Fassade"}
    ],
    tips:[
-     "Restaurant Tymi — käsegefüllte Spitzpaprika ist legendär",
-     "Pazari i Ri — Street Food & lokale Produkte",
-     "Dajti-Berg per Gondel — Panoramablick über Tirana",
-     "Bunk'Art 2 — weniger bekannt, genauso beeindruckend",
-     "Café Komiteti — echter Raki-Bar, keine Touristenfalle",
-     "Rruga Murat Toptani — beste Restaurants der Stadt",
-     "Tirana See morgens — wo die Einheimischen sind",
-     "Tave Kosi probieren — Lamm mit Joghurt, Nationalgericht"
+     "Restaurant Tymi -- käsegefüllte Spitzpaprika ist legendär",
+     "Pazari i Ri -- Street Food & lokale Produkte",
+     "Dajti-Berg per Gondel -- Panoramablick über Tirana",
+     "Bunk'Art 2 -- weniger bekannt, genauso beeindruckend",
+     "Café Komiteti -- echter Raki-Bar, keine Touristenfalle",
+     "Rruga Murat Toptani -- beste Restaurants der Stadt",
+     "Tirana See morgens -- wo die Einheimischen sind",
+     "Tave Kosi probieren -- Lamm mit Joghurt, Nationalgericht"
    ],
-   warns:["Rush Hour 07:30–09:00 & 16:30–19:00 meiden","Bargeld (Lek) am Flughafen abheben","Auto erst ab 15.06 nötig"]},
+   warns:["Rush Hour 07:30-09:00 & 16:30-19:00 meiden","Bargeld (Lek) am Flughafen abheben","Auto erst ab 15.06 nötig"]},
 
-  {id:"lu",city:"Lumas / Berat",emoji:"🏰",color:"#8B6F47",dates:"15.06–18.06",nights:3,
+  {id:"lu",city:"Lumas / Berat",emoji:"🏰",color:"#8B6F47",dates:"15.06-18.06",nights:3,
    address:"Lumas, Berat County",checkin:"15:00",checkout:"11:00",platform:"Airbnb",
-   drive:{f:"Tirana",b:"1,5–2 Std.",w:"2,5–3 Std.",k:"~115 km"},
+   drive:{f:"Tirana",b:"1,5-2 Std.",w:"2,5-3 Std.",k:"~115 km"},
    activities:[
-     {n:"Berat Altstadt & Burg",t:"UNESCO Welterbe",p:"Nachmittags — Tagesbusse aus Tirana dann weg"},
-     {n:"Osum Canyon",t:"Natur/Abenteuer",p:"Waten & schwimmen — besser als jeder Strandtag!"},
-     {n:"Weingüter Berat",t:"Genuss",p:"Schönste Weinregion Albaniens — Probe buchen"},
+     {n:"Berat Altstadt & Burg",t:"UNESCO Welterbe",p:"Nachmittags -- Tagesbusse aus Tirana dann weg"},
+     {n:"Osum Canyon",t:"Natur/Abenteuer",p:"Waten & schwimmen -- besser als jeder Strandtag!"},
+     {n:"Weingüter Berat",t:"Genuss",p:"Schönste Weinregion Albaniens -- Probe buchen"},
      {n:"Ethnografisches Museum",t:"Kultur",p:"Eines der schönsten auf dem Balkan"},
      {n:"Onufri Museum",t:"Kultur",p:"Ikonenmalerei in der Auferstehungskirche"}
    ],
    tips:[
-     "Berat früh morgens — magisches Licht auf den Osmanenhäusern",
-     "Gorica-Brücke — bester Fotomoment, beide Stadtteile sichtbar",
-     "Lokale Raki-Produktion — Einheimische bieten Verkostungen an",
-     "Mangalem vs. Gorica — muslimisch vs. christlich, völlig verschieden",
-     "Restaurant Antigonea — Terrasse am Osum-Fluss",
-     "Osum Canyon Bootfahrt — völlig andere Perspektive",
-     "Cobo Winery — ältester Weinkeller, Gratis-Führung",
-     "Tuma e Kucit — bronzezeitliche Grabhügel, kaum Touristen"
+     "Berat früh morgens -- magisches Licht auf den Osmanenhäusern",
+     "Gorica-Brücke -- bester Fotomoment, beide Stadtteile sichtbar",
+     "Lokale Raki-Produktion -- Einheimische bieten Verkostungen an",
+     "Mangalem vs. Gorica -- muslimisch vs. christlich, völlig verschieden",
+     "Restaurant Antigonea -- Terrasse am Osum-Fluss",
+     "Osum Canyon Bootfahrt -- völlig andere Perspektive",
+     "Cobo Winery -- ältester Weinkeller, Gratis-Führung",
+     "Tuma e Kucit -- bronzezeitliche Grabhügel, kaum Touristen"
    ],
-   warns:["Osum Canyon: Wasserschuhe & Wechselkleidung","Berat auf Hügeln — festes Schuhwerk"]},
+   warns:["Osum Canyon: Wasserschuhe & Wechselkleidung","Berat auf Hügeln -- festes Schuhwerk"]},
 
-  {id:"gj",city:"Gjirokastër",emoji:"🏯",color:"#6B7C6E",dates:"18.06–20.06",nights:2,
-   address:"Rruga Granicë, Gjirokastra 6001",checkin:"15–22 Uhr",checkout:"08–11 Uhr",platform:"Booking",
-   drive:{f:"Lumas",b:"1,5–2 Std.",w:"2,5–3 Std.",k:"~90 km"},
+  {id:"gj",city:"Gjirokastër",emoji:"🏯",color:"#6B7C6E",dates:"18.06-20.06",nights:2,
+   address:"Rruga Granicë, Gjirokastra 6001",checkin:"15-22 Uhr",checkout:"08-11 Uhr",platform:"Booking",
+   drive:{f:"Lumas",b:"1,5-2 Std.",w:"2,5-3 Std.",k:"~90 km"},
    activities:[
-     {n:"Burg von Gjirokastër",t:"UNESCO Welterbe",p:"Cold-War-Bunker darunter — absolutes Highlight"},
-     {n:"Osmanische Altstadt",t:"Sehenswürdigkeit",p:"Stadt der 1000 Treppen — mind. 3 Stunden"},
-     {n:"Skenduli-Haus",t:"Kultur",p:"Osmanisches Stadthaus 17. Jh. — atemberaubend"},
+     {n:"Burg von Gjirokastër",t:"UNESCO Welterbe",p:"Cold-War-Bunker darunter -- absolutes Highlight"},
+     {n:"Osmanische Altstadt",t:"Sehenswürdigkeit",p:"Stadt der 1000 Treppen -- mind. 3 Stunden"},
+     {n:"Skenduli-Haus",t:"Kultur",p:"Osmanisches Stadthaus 17. Jh. -- atemberaubend"},
      {n:"Ura e Kadiut",t:"Sehenswürdigkeit",p:"Osmanische Brücke, ruhig und fotogen"},
      {n:"Basar-Moschee",t:"Kultur",p:"Einzige kommunistenverschonte Moschee"}
    ],
    tips:[
-     "~300m Höhe — angenehm kühl, ideal für Abendspaziergänge",
-     "Restaurant Odaja — Terrasse mit direktem Burgblick",
-     "Ismail Kadare Museum — Geburtshaus des albanischen Nobelpreiskandidaten",
-     "Zekate-Haus — beeindruckendstes Osmanenhaus, weniger besucht",
-     "Basar-Gasse abends — gehört dann euch allein",
-     "Burggefängnis — gruseliger Teil, oft übersehen",
-     "Drino-Tal Panorama — Blick bis nach Griechenland",
-     "Byrek frisch aus dem Ofen — kleines Café am Basar morgens"
+     "~300m Höhe -- angenehm kühl, ideal für Abendspaziergänge",
+     "Restaurant Odaja -- Terrasse mit direktem Burgblick",
+     "Ismail Kadare Museum -- Geburtshaus des albanischen Nobelpreiskandidaten",
+     "Zekate-Haus -- beeindruckendstes Osmanenhaus, weniger besucht",
+     "Basar-Gasse abends -- gehört dann euch allein",
+     "Burggefängnis -- gruseliger Teil, oft übersehen",
+     "Drino-Tal Panorama -- Blick bis nach Griechenland",
+     "Byrek frisch aus dem Ofen -- kleines Café am Basar morgens"
    ],
-   warns:["2 Nächte sehr knapp — früh starten und priorisieren","Pflastersteine überall — keine Flip-Flops"]},
+   warns:["2 Nächte sehr knapp -- früh starten und priorisieren","Pflastersteine überall -- keine Flip-Flops"]},
 
-  {id:"hi",city:"Himara",emoji:"🌊",color:"#2E7D8C",dates:"20.06–23.06",nights:3,
-   address:"Spiro Milo road, 9425 Himarë",checkin:"14–22 Uhr",checkout:"08:30–10:30",platform:"Booking",
-   drive:{f:"Gjirokastër",b:"1,5–2 Std.",w:"2,5–3 Std.",k:"~70 km",warn:"Llogara-Pass!"},
+  {id:"hi",city:"Himara",emoji:"🌊",color:"#2E7D8C",dates:"20.06-23.06",nights:3,
+   address:"Spiro Milo road, 9425 Himarë",checkin:"14-22 Uhr",checkout:"08:30-10:30",platform:"Booking",
+   drive:{f:"Gjirokastër",b:"1,5-2 Std.",w:"2,5-3 Std.",k:"~70 km",warn:"Llogara-Pass!"},
    activities:[
-     {n:"Llogara-Pass",t:"Natur",p:"Auf dem Weg — 20–30 Min. Fotostopp einplanen"},
-     {n:"Himara Altstadt & Burg",t:"Sehenswürdigkeit",p:"5 Min. Fußweg — Ruhe und Meerblick"},
-     {n:"Strandhopping Riviera",t:"Strand",p:"Livadhi, Potam, Spile — jeweils anders"},
-     {n:"Dhermi",t:"Strand & Kultur",p:"15 Min. nördlich — Traumstrand, byzantinische Kirche"},
-     {n:"Vuno",t:"Geheimtipp",p:"Kleines Hügeldorf — kaum Touristen"},
-     {n:"Bootstour",t:"Abenteuer",p:"Krorez Beach nur per Boot — vorbuchen!"}
+     {n:"Llogara-Pass",t:"Natur",p:"Auf dem Weg -- 20-30 Min. Fotostopp einplanen"},
+     {n:"Himara Altstadt & Burg",t:"Sehenswürdigkeit",p:"5 Min. Fußweg -- Ruhe und Meerblick"},
+     {n:"Strandhopping Riviera",t:"Strand",p:"Livadhi, Potam, Spile -- jeweils anders"},
+     {n:"Dhermi",t:"Strand & Kultur",p:"15 Min. nördlich -- Traumstrand, byzantinische Kirche"},
+     {n:"Vuno",t:"Geheimtipp",p:"Kleines Hügeldorf -- kaum Touristen"},
+     {n:"Bootstour",t:"Abenteuer",p:"Krorez Beach nur per Boot -- vorbuchen!"}
    ],
    tips:[
-     "Gjipe Beach — 40 Min. Canyon-Wanderung, absolut wild, kein Kommerz",
-     "Piratenstrand (Livadhi Nord) — fast immer leer",
-     "Lokale Fischer fragen — günstiger als offizielle Touren",
-     "Sonnenuntergang von der Himara-Burg — mit lokalem Wein",
-     "Palasa-Dorf — Blick auf beide Buchten gleichzeitig",
-     "Spile Beach — türkisblaues Wasser, sehr ruhig",
-     "Taverne Rapo — Koch entscheidet was frisch ist, immer perfekt",
-     "Dhermi Kirche Shën Theodhor — byzantinische Fresken im Olivenhain",
-     "Nacht-Schwimmen in Potam — phosphoreszierendes Plankton"
+     "Gjipe Beach -- 40 Min. Canyon-Wanderung, absolut wild, kein Kommerz",
+     "Piratenstrand (Livadhi Nord) -- fast immer leer",
+     "Lokale Fischer fragen -- günstiger als offizielle Touren",
+     "Sonnenuntergang von der Himara-Burg -- mit lokalem Wein",
+     "Palasa-Dorf -- Blick auf beide Buchten gleichzeitig",
+     "Spile Beach -- türkisblaues Wasser, sehr ruhig",
+     "Taverne Rapo -- Koch entscheidet was frisch ist, immer perfekt",
+     "Dhermi Kirche Shën Theodhor -- byzantinische Fresken im Olivenhain",
+     "Nacht-Schwimmen in Potam -- phosphoreszierendes Plankton"
    ],
    warns:["Llogara-Pass: vor 10 Uhr fahren wegen LKW","Bootstouren im Juni vorbuchen","Parkplätze Dhermi im Juni knapp"]},
 
-  {id:"sa",city:"Saranda",emoji:"⛵",color:"#1B6B8A",dates:"23.06–25.06",nights:2,
-   address:"Rruga Bilal Golemi, 9701 Saranda",checkin:"14–23 Uhr",checkout:"08–11 Uhr",platform:"Booking",
-   drive:{f:"Himara",b:"1–1,5 Std.",w:"2 Std.",k:"~50 km"},
+  {id:"sa",city:"Saranda",emoji:"⛵",color:"#1B6B8A",dates:"23.06-25.06",nights:2,
+   address:"Rruga Bilal Golemi, 9701 Saranda",checkin:"14-23 Uhr",checkout:"08-11 Uhr",platform:"Booking",
+   drive:{f:"Himara",b:"1-1,5 Std.",w:"2 Std.",k:"~50 km"},
    activities:[
-     {n:"Ksamil-Inseln",t:"Strand",p:"Bootsfahrt zu 4 Inseln — kristallklares Wasser"},
-     {n:"Butrint Nationalpark",t:"UNESCO Welterbe",p:"Griechisch-Römisch-Osmanisch — mind. 2 Std."},
+     {n:"Ksamil-Inseln",t:"Strand",p:"Bootsfahrt zu 4 Inseln -- kristallklares Wasser"},
+     {n:"Butrint Nationalpark",t:"UNESCO Welterbe",p:"Griechisch-Römisch-Osmanisch -- mind. 2 Std."},
      {n:"Lëkurësi-Burg",t:"Sehenswürdigkeit",p:"Bester Panoramablick auf Stadt & Korfu"},
-     {n:"Ksamil Strände",t:"Strand",p:"Vor 9 Uhr kommen — ab Mittag sehr voll"}
+     {n:"Ksamil Strände",t:"Strand",p:"Vor 9 Uhr kommen -- ab Mittag sehr voll"}
    ],
    tips:[
-     "Restaurant ODA — Einheimische Liebling, Fisch direkt vom Boot",
-     "Fähre Korfu — 45 Min., spontaner Griechenland-Tagesausflug",
-     "Shën Gjini Beach — wie Ksamil, kaum bekannt",
-     "Butrint um 08:00 Uhr — Ruinen im Morgenlicht, fast leer",
-     "Ksamil per Kajak — günstiger und flexibler",
-     "Taverna Mango — Muscheln aus eigener Zucht",
-     "Abend-Xhiro auf der Promenade — mit Einheimischen spazieren",
-     "Lëkurësi Sonnenuntergang — Korfu bei Dämmerung"
+     "Restaurant ODA -- Einheimische Liebling, Fisch direkt vom Boot",
+     "Fähre Korfu -- 45 Min., spontaner Griechenland-Tagesausflug",
+     "Shën Gjini Beach -- wie Ksamil, kaum bekannt",
+     "Butrint um 08:00 Uhr -- Ruinen im Morgenlicht, fast leer",
+     "Ksamil per Kajak -- günstiger und flexibler",
+     "Taverna Mango -- Muscheln aus eigener Zucht",
+     "Abend-Xhiro auf der Promenade -- mit Einheimischen spazieren",
+     "Lëkurësi Sonnenuntergang -- Korfu bei Dämmerung"
    ],
-   warns:["Ksamil Juni = Hochsaison — früh aufstehen","Parkplätze Ksamil sehr knapp","Nur 2 Nächte — Butrint & Ksamil priorisieren"]},
+   warns:["Ksamil Juni = Hochsaison -- früh aufstehen","Parkplätze Ksamil sehr knapp","Nur 2 Nächte -- Butrint & Ksamil priorisieren"]},
 
-  {id:"t2",city:"Tirana (Rückkehr)",emoji:"✈️",color:"#C8A96E",dates:"25.06–26.06",nights:1,
-   address:"Rruga Muharrem Bajraktari, Laknas 1001",checkin:"13–24 Uhr",checkout:"10–11 Uhr",platform:"Booking",
-   drive:{f:"Saranda",b:"6–7 Std.",w:"8+ Std.",k:"~350 km",warn:"Start 07:00!"},
+  {id:"t2",city:"Tirana (Rückkehr)",emoji:"✈",color:"#C8A96E",dates:"25.06-26.06",nights:1,
+   address:"Rruga Muharrem Bajraktari, Laknas 1001",checkin:"13-24 Uhr",checkout:"10-11 Uhr",platform:"Booking",
+   drive:{f:"Saranda",b:"6-7 Std.",w:"8+ Std.",k:"~350 km",warn:"Start 07:00!"},
    activities:[
-     {n:"Küstenstraße Riviera",t:"Highlight",p:"Llogara-Pass nochmals — genauso spektakulär"},
+     {n:"Küstenstraße Riviera",t:"Highlight",p:"Llogara-Pass nochmals -- genauso spektakulär"},
      {n:"Vlora Zwischenstopp",t:"Stadt",p:"Mittagspause, Unabhängigkeitsdenkmal"},
      {n:"Porto Palermo",t:"Sehenswürdigkeit",p:"Ali-Pascha-Festung direkt an der Küste"},
      {n:"Abschlussabend Tirana",t:"Genuss",p:"Blloku, letztes Tave Kosi"}
    ],
    tips:[
-     "Frühstart 07:00 Uhr — vor dem Tagesverkehr am Llogara-Pass",
-     "Borsh Beach — längster ruhigster Strand, letzte Badepause",
+     "Frühstart 07:00 Uhr -- vor dem Tagesverkehr am Llogara-Pass",
+     "Borsh Beach -- längster ruhigster Strand, letzte Badepause",
      "Vlora Mittagessen: Restaurant Belvedere mit Meerblick",
-     "Souvenirs: Pazari i Ri — keine Touristenfallen",
-     "Bar Radio im Blloku — ehemaliges Kommunisten-Wohnhaus",
+     "Souvenirs: Pazari i Ri -- keine Touristenfallen",
+     "Bar Radio im Blloku -- ehemaliges Kommunisten-Wohnhaus",
      "Auto volltanken vor Rückgabe an der SH60"
    ],
-   warns:["Abflug 26.06 12:00 — Mietwagen 2 Std. vorher abgeben","Fahrzeug bei Rückgabe fotografieren!","Rush Hour Tirana 16:30–19:00 meiden"]}
+   warns:["Abflug 26.06 12:00 -- Mietwagen 2 Std. vorher abgeben","Fahrzeug bei Rückgabe fotografieren!","Rush Hour Tirana 16:30-19:00 meiden"]}
 ];
 
 var DIST = [
-  {f:"Tirana",t:"Lumas",k:"~115 km",b:"1,5–2 Std.",w:"2,5–3 Std.",s:"3 Std."},
-  {f:"Lumas",t:"Gjirokastër",k:"~90 km",b:"1,5–2 Std.",w:"2,5–3 Std.",s:"3 Std."},
-  {f:"Gjirokastër",t:"Himara",k:"~70 km",b:"1,5–2 Std.",w:"2,5–3 Std.",s:"3 Std. ⚠️"},
-  {f:"Himara",t:"Saranda",k:"~50 km",b:"1–1,5 Std.",w:"2 Std.",s:"2,5 Std."},
-  {f:"Saranda",t:"Tirana (Küste)",k:"~350 km",b:"6–7 Std.",w:"8+ Std.",s:"8–9 Std. ⚠️"}
+  {f:"Tirana",t:"Lumas",k:"~115 km",b:"1,5-2 Std.",w:"2,5-3 Std.",s:"3 Std."},
+  {f:"Lumas",t:"Gjirokastër",k:"~90 km",b:"1,5-2 Std.",w:"2,5-3 Std.",s:"3 Std."},
+  {f:"Gjirokastër",t:"Himara",k:"~70 km",b:"1,5-2 Std.",w:"2,5-3 Std.",s:"3 Std. ⚠"},
+  {f:"Himara",t:"Saranda",k:"~50 km",b:"1-1,5 Std.",w:"2 Std.",s:"2,5 Std."},
+  {f:"Saranda",t:"Tirana (Küste)",k:"~350 km",b:"6-7 Std.",w:"8+ Std.",s:"8-9 Std. ⚠"}
 ];
 
 var ACC = [
-  {c:"Tirana (1)",d:"12.–15.06",n:3,pl:"Airbnb",addr:"8RH5+4WV, Rruga e Kavajës",cost:299,due:"bezahlt",al:false,ci:"15:00",co:"10:00"},
-  {c:"Lumas",d:"15.–18.06",n:3,pl:"Airbnb",addr:"Lumas, Berat County",cost:168,due:"06.06",al:false,ci:"15:00",co:"11:00"},
-  {c:"Gjirokastër",d:"18.–20.06",n:2,pl:"Booking",addr:"Rruga Granicë, Gjirokastra 6001",cost:100,due:"18.06",al:false,ci:"15–22",co:"08–11"},
-  {c:"Himara",d:"20.–23.06",n:3,pl:"Booking",addr:"Spiro Milo road, 9425 Himarë",cost:195,due:"29.05",al:true,ci:"14–22",co:"08:30–10:30"},
-  {c:"Saranda",d:"23.–25.06",n:2,pl:"Booking",addr:"Rruga Bilal Golemi, 9701 Saranda",cost:178,due:"bei Ankunft",al:false,ci:"14–23",co:"08–11"},
-  {c:"Laknas",d:"25.–26.06",n:1,pl:"Booking",addr:"Rruga Muharrem Bajraktari, Laknas",cost:150,due:"bei Ankunft",al:false,ci:"13–24",co:"10–11"}
+  {c:"Tirana (1)",d:"12.-15.06",n:3,pl:"Airbnb",addr:"8RH5+4WV, Rruga e Kavajës",cost:299,due:"bezahlt",al:false,ci:"15:00",co:"10:00"},
+  {c:"Lumas",d:"15.-18.06",n:3,pl:"Airbnb",addr:"Lumas, Berat County",cost:168,due:"06.06",al:false,ci:"15:00",co:"11:00"},
+  {c:"Gjirokastër",d:"18.-20.06",n:2,pl:"Booking",addr:"Rruga Granicë, Gjirokastra 6001",cost:100,due:"18.06",al:false,ci:"15-22",co:"08-11"},
+  {c:"Himara",d:"20.-23.06",n:3,pl:"Booking",addr:"Spiro Milo road, 9425 Himarë",cost:195,due:"29.05",al:true,ci:"14-22",co:"08:30-10:30"},
+  {c:"Saranda",d:"23.-25.06",n:2,pl:"Booking",addr:"Rruga Bilal Golemi, 9701 Saranda",cost:178,due:"bei Ankunft",al:false,ci:"14-23",co:"08-11"},
+  {c:"Laknas",d:"25.-26.06",n:1,pl:"Booking",addr:"Rruga Muharrem Bajraktari, Laknas",cost:150,due:"bei Ankunft",al:false,ci:"13-24",co:"10-11"}
 ];
 
 var WX = [
-  {c:"Tirana",i:"☀️",hi:32,lo:18,sun:10,r:2,sea:null,d:"Heiss & sonnig"},
-  {c:"Lumas/Berat",i:"🌤️",hi:34,lo:19,sun:11,r:1,sea:null,d:"Sehr warm, trocken"},
-  {c:"Gjirokastër",i:"☀️",hi:33,lo:17,sun:11,r:1,sea:null,d:"Trocken, abends kühl"},
+  {c:"Tirana",i:"☀",hi:32,lo:18,sun:10,r:2,sea:null,d:"Heiss & sonnig"},
+  {c:"Lumas/Berat",i:"🌤",hi:34,lo:19,sun:11,r:1,sea:null,d:"Sehr warm, trocken"},
+  {c:"Gjirokastër",i:"☀",hi:33,lo:17,sun:11,r:1,sea:null,d:"Trocken, abends kühl"},
   {c:"Himara",i:"🌊",hi:28,lo:20,sun:12,r:1,sea:23,d:"Perfektes Strandwetter"},
   {c:"Saranda",i:"🌊",hi:29,lo:21,sun:12,r:1,sea:24,d:"Heiss, Meeresbrise"}
 ];
 
 var TIPS = [
-  {c:"💳 Bargeld",t:"Albanischer Lek überall — am Flughafen abheben. Viele Orte nur Bargeld."},
-  {c:"🗺️ Navigation",t:"Google Maps offline herunterladen! In Lumas kein Netz. Maps.me als Backup."},
-  {c:"🚗 Fahren",t:"20–40% mehr Zeit als GPS zeigt. Nie nach 18 Uhr auf Bergstraßen."},
-  {c:"📸 Mietwagen",t:"Bei Abholung alle Schäden fotografieren — Rundumfotos mit Zeitstempel."},
+  {c:"💳 Bargeld",t:"Albanischer Lek überall -- am Flughafen abheben. Viele Orte nur Bargeld."},
+  {c:"🗺 Navigation",t:"Google Maps offline herunterladen! In Lumas kein Netz. Maps.me als Backup."},
+  {c:"🚗 Fahren",t:"20-40% mehr Zeit als GPS zeigt. Nie nach 18 Uhr auf Bergstraßen."},
+  {c:"📸 Mietwagen",t:"Bei Abholung alle Schäden fotografieren -- Rundumfotos mit Zeitstempel."},
   {c:"⏰ Umzugstage",t:"Immer vor 09:00 Uhr los. Hitze & Verkehr treffen sich ab Mittag."},
-  {c:"📱 SIM-Karte",t:"Albanische SIM am Flughafen — Vodafone Albania oder ONE Mobile."},
+  {c:"📱 SIM-Karte",t:"Albanische SIM am Flughafen -- Vodafone Albania oder ONE Mobile."},
   {c:"🏥 Notfall",t:"EU-Krankenkarte mitnehmen. Krankenhäuser in Tirana, Gjirokastër, Saranda."},
-  {c:"🅿️ Parken",t:"Saranda & Ksamil im Juni kaum Plätze — früh anreisen oder Taxi."},
+  {c:"🅿 Parken",t:"Saranda & Ksamil im Juni kaum Plätze -- früh anreisen oder Taxi."},
   {c:"⛽ Tanken",t:"Bei halbem Tank tanken. Vor Llogara-Pass unbedingt volltanken."},
   {c:"💊 Apotheke",t:"Reiseapotheke: Durchfallmittel, Elektrolyte, LSF 50+, Wasserschuhe."},
   {c:"🔑 Notruf",t:"Albanien: 112 · Polizei: 129 · DiscoverCars: +1 888 223 5555"},
@@ -383,7 +387,7 @@ var BR=[[42.56,20.07],[42.50,20.18],[42.45,20.26],[42.38,20.40],[42.32,20.49],[4
 var HR=[[41.327,19.819],[41.310,19.805],[41.280,19.790],[41.235,19.782],[41.180,19.798],[41.105,19.865],[41.065,19.880],[41.020,19.892],[40.940,19.870],[40.870,19.905],[40.800,19.925],[40.730,19.943],[40.680,19.960],[40.640,19.978],[40.600,19.995],[40.550,20.020],[40.500,20.050],[40.450,20.040],[40.400,20.035],[40.350,20.020],[40.296,20.018],[40.260,20.035],[40.220,20.060],[40.180,20.085],[40.145,20.105],[40.075,20.139],[40.060,20.120],[40.010,20.070],[39.980,19.990],[39.950,19.970],[39.910,19.985],[39.875,20.007]];
 var RR=[[39.875,20.007],[39.910,19.970],[39.940,19.950],[39.980,19.810],[40.000,19.775],[40.040,19.760],[40.102,19.746],[40.135,19.738],[40.167,19.718],[40.195,19.705],[40.215,19.688],[40.225,19.650],[40.235,19.618],[40.248,19.595],[40.270,19.565],[40.310,19.530],[40.360,19.500],[40.420,19.488],[40.468,19.490],[40.510,19.490],[40.550,19.487],[40.600,19.510],[40.660,19.550],[40.710,19.562],[40.770,19.580],[40.830,19.570],[40.880,19.650],[40.940,19.710],[41.000,19.735],[41.070,19.760],[41.150,19.768],[41.210,19.768],[41.285,19.768]];
 var MA=[{n:"Tirana",la:41.327,ln:19.819,i:1,lx:26,ly:-16,a:"start"},{n:"Lumas",la:40.640,ln:19.978,i:2,lx:26,ly:-16,a:"start"},{n:"Gjiro.",la:40.075,ln:20.139,i:3,lx:26,ly:-16,a:"start"},{n:"Himara",la:40.102,ln:19.746,i:4,lx:-26,ly:-16,a:"end"},{n:"Saranda",la:39.875,ln:20.007,i:5,lx:26,ly:18,a:"start"},{n:"Laknas",la:41.285,ln:19.768,i:6,lx:-26,ly:18,a:"end"}];
-var MP=[{n:"Berat",la:40.705,ln:19.952,ic:"🏛",col:"#a78bfa",lx:24,ly:-11,a:"start"},{n:"Llogara",la:40.235,ln:19.618,ic:"⚠️",col:"#f97316",lx:-24,ly:-11,a:"end"},{n:"Ksamil",la:39.770,ln:20.005,ic:"🏖",col:"#22d3ee",lx:24,ly:8,a:"start"},{n:"Butrint",la:39.740,ln:20.022,ic:"🏛",col:"#a78bfa",lx:24,ly:-11,a:"start"},{n:"Dhermi",la:40.167,ln:19.718,ic:"🏖",col:"#22d3ee",lx:-24,ly:-11,a:"end"},{n:"Vlora",la:40.468,ln:19.490,ic:"🏙",col:"#86efac",lx:-24,ly:8,a:"end"},{n:"P.Palm.",la:40.000,ln:19.775,ic:"🏛",col:"#a78bfa",lx:-24,ly:-11,a:"end"}];
+var MP=[{n:"Berat",la:40.705,ln:19.952,ic:"🏛",col:"#a78bfa",lx:24,ly:-11,a:"start"},{n:"Llogara",la:40.235,ln:19.618,ic:"⚠",col:"#f97316",lx:-24,ly:-11,a:"end"},{n:"Ksamil",la:39.770,ln:20.005,ic:"🏖",col:"#22d3ee",lx:24,ly:8,a:"start"},{n:"Butrint",la:39.740,ln:20.022,ic:"🏛",col:"#a78bfa",lx:24,ly:-11,a:"start"},{n:"Dhermi",la:40.167,ln:19.718,ic:"🏖",col:"#22d3ee",lx:-24,ly:-11,a:"end"},{n:"Vlora",la:40.468,ln:19.490,ic:"🏙",col:"#86efac",lx:-24,ly:8,a:"end"},{n:"P.Palm.",la:40.000,ln:19.775,ic:"🏛",col:"#a78bfa",lx:-24,ly:-11,a:"end"}];
 var MTN=[[42.3,20.3,32,18],[42.1,20.6,28,16],[41.8,20.7,30,17],[41.5,20.45,22,13],[41.2,20.55,20,12],[41.0,20.6,24,14],[40.9,20.85,18,10],[40.7,20.6,20,11],[40.5,20.4,18,10],[40.3,20.35,16,9],[40.6,19.75,16,9],[40.35,19.65,20,11]];
 
 // Extra map data for improved rendering
@@ -394,17 +398,19 @@ var SNOW=[[42.3,20.28,6,3],[42.1,20.58,5,2],[41.8,20.68,4,2]];
 var MTN2=[[42.35,20.15,28,16],[42.0,20.75,24,14],[41.65,20.55,20,12],[41.35,20.52,18,10],[41.08,20.58,22,13],[40.88,20.9,16,9],[40.72,20.55,18,10],[40.48,20.42,16,9],[40.22,20.28,14,8],[40.08,20.08,12,7],[40.62,19.72,18,10],[40.38,19.62,16,9],[41.28,19.52,14,8],[41.62,19.82,16,9]];
 
 // All map points in one list for the interactive panel
+var mapActiveId = null;
+
 var ALL_POINTS = [
   // Accommodations
-  {id:'p1', label:'Tirana',       sub:'12.–15.06 & 25.–26.06', ic:'🏠', col:'#93c5fd', la:41.327, ln:19.819, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
-  {id:'p2', label:'Lumas',        sub:'15.–18.06',              ic:'🏠', col:'#93c5fd', la:40.640, ln:19.978, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
-  {id:'p3', label:'Gjirokastër',  sub:'18.–20.06',              ic:'🏠', col:'#93c5fd', la:40.075, ln:20.139, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
-  {id:'p4', label:'Himara',       sub:'20.–23.06',              ic:'🏠', col:'#93c5fd', la:40.102, ln:19.746, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
-  {id:'p5', label:'Saranda',      sub:'23.–25.06',              ic:'🏠', col:'#93c5fd', la:39.875, ln:20.007, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
-  {id:'p6', label:'Laknas',       sub:'25.–26.06',              ic:'🏠', col:'#93c5fd', la:41.285, ln:19.768, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
+  {id:'p1', label:'Tirana',       sub:'12.-15.06 & 25.-26.06', ic:'🏠', col:'#93c5fd', la:41.327, ln:19.819, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
+  {id:'p2', label:'Lumas',        sub:'15.-18.06',              ic:'🏠', col:'#93c5fd', la:40.640, ln:19.978, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
+  {id:'p3', label:'Gjirokastër',  sub:'18.-20.06',              ic:'🏠', col:'#93c5fd', la:40.075, ln:20.139, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
+  {id:'p4', label:'Himara',       sub:'20.-23.06',              ic:'🏠', col:'#93c5fd', la:40.102, ln:19.746, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
+  {id:'p5', label:'Saranda',      sub:'23.-25.06',              ic:'🏠', col:'#93c5fd', la:39.875, ln:20.007, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
+  {id:'p6', label:'Laknas',       sub:'25.-26.06',              ic:'🏠', col:'#93c5fd', la:41.285, ln:19.768, r:12, fill:'#1e3a6e', stroke:'#93c5fd'},
   // POIs
   {id:'p7', label:'Berat',        sub:'UNESCO · Osum Canyon',   ic:'🏛', col:'#a78bfa', la:40.705, ln:19.952, r:6,  fill:'#a78bfa', stroke:'rgba(255,255,255,0.5)'},
-  {id:'p8', label:'Llogara Pass', sub:'⚠️ Serpentinen',         ic:'⚠️', col:'#f97316', la:40.235, ln:19.618, r:6,  fill:'#f97316', stroke:'rgba(255,255,255,0.5)'},
+  {id:'p8', label:'Llogara Pass', sub:'⚠ Serpentinen',         ic:'⚠', col:'#f97316', la:40.235, ln:19.618, r:6,  fill:'#f97316', stroke:'rgba(255,255,255,0.5)'},
   {id:'p9', label:'Ksamil',       sub:'Strand · Bootstouren',   ic:'🏖', col:'#22d3ee', la:39.770, ln:20.005, r:6,  fill:'#22d3ee', stroke:'rgba(255,255,255,0.5)'},
   {id:'p10',label:'Butrint',      sub:'UNESCO · Antike Ruinen', ic:'🏛', col:'#a78bfa', la:39.740, ln:20.022, r:6,  fill:'#a78bfa', stroke:'rgba(255,255,255,0.5)'},
   {id:'p11',label:'Dhermi',       sub:'Traumstrand Riviera',    ic:'🏖', col:'#22d3ee', la:40.167, ln:19.718, r:6,  fill:'#22d3ee', stroke:'rgba(255,255,255,0.5)'},
@@ -414,51 +420,51 @@ var ALL_POINTS = [
 
 var MARKETS = [
   {
-    city:"Tirana", emoji:"🏙️", dates:"12.–15.06 & 25.–26.06",
+    city:"Tirana", emoji:"🏙", dates:"12.-15.06 & 25.-26.06",
     items:[
-      {name:"Pazari i Ri (Neuer Basar)", type:"Bauernmarkt & Basar", hours:"Täglich 07:00–14:00 · beste Zeit 08–10 Uhr",
+      {name:"Pazari i Ri (Neuer Basar)", type:"Bauernmarkt & Basar", hours:"Täglich 07:00-14:00 · beste Zeit 08-10 Uhr",
        offer:"Frischgemüse, Obst, Fisch, Fleisch, Käse, Gewürze, Olivenöl, Raki & Wein · 130+ Händler · Souvenirs",
        tip:"Morgens für frischste Ware · Preise überwiegend fix · Restaurants & Cafés bis abends offen", dist:"Stadtzentrum", icon:"🥬"},
-      {name:"Tregu Cam (Tagesmarkt)", type:"Straßenmarkt", hours:"Täglich morgens bis ca. 13–14 Uhr",
+      {name:"Tregu Cam (Tagesmarkt)", type:"Straßenmarkt", hours:"Täglich morgens bis ca. 13-14 Uhr",
        offer:"Kleidung, Schuhe, Haushaltswaren, Taschen, Spielzeug",
-       tip:"Früh hingehen — spätestens bis Mittag · Feilschen möglich", dist:"Stadtzentrum", icon:"👕"},
+       tip:"Früh hingehen -- spätestens bis Mittag · Feilschen möglich", dist:"Stadtzentrum", icon:"👕"},
       {name:"Medrese (Kleidermarkt)", type:"Kleidermarkt, überdacht", hours:"Täglich · schließt ca. 13:00 Uhr",
        offer:"Neue Kleidung & Schuhe (Damen, Herren, Kinder), Haushaltswäsche",
        tip:"Unbedingt vor 12 Uhr · Handeln erwünscht", dist:"Stadtzentrum", icon:"👗"},
     ]
   },
   {
-    city:"Kruja", emoji:"🏔️", dates:"Tagesausflug ab Tirana (13.–15.06 od. 25.06)",
+    city:"Kruja", emoji:"🏔", dates:"Tagesausflug ab Tirana (13.-15.06 od. 25.06)",
     items:[
-      {name:"Pazari i Vjetër (Alter Basar)", type:"Historischer Touristenbasar", hours:"Ca. 09:00–18:00 · manche Läden So geschlossen",
+      {name:"Pazari i Vjetër (Alter Basar)", type:"Historischer Touristenbasar", hours:"Ca. 09:00-18:00 · manche Läden So geschlossen",
        offer:"Handgefertigte Teppiche, Kupferwaren, Silberschmuck, Holzschnitzereien, Souvenirs · Blick auf Burg Kruja",
-       tip:"1–2 Std. einplanen · Barzahlung (Lek) · ideal auch letzter Stop vor Rückflug (30 Min. vom Flughafen)", dist:"~45 Min. von Tirana", icon:"🪬"},
+       tip:"1-2 Std. einplanen · Barzahlung (Lek) · ideal auch letzter Stop vor Rückflug (30 Min. vom Flughafen)", dist:"~45 Min. von Tirana", icon:"🪬"},
     ]
   },
   {
-    city:"Gjirokastër", emoji:"🏯", dates:"18.–20.06",
+    city:"Gjirokastër", emoji:"🏯", dates:"18.-20.06",
     items:[
-      {name:"Qafa e Pazarit (Alter Basar)", type:"Historischer Basar · UNESCO", hours:"08:00–16:30 Uhr täglich",
+      {name:"Qafa e Pazarit (Alter Basar)", type:"Historischer Basar · UNESCO", hours:"08:00-16:30 Uhr täglich",
        offer:"Handgefertigte Waren, Teppiche, Silberschmuck, albanische Kleidung, Keramik, Souvenirs · lokale Imbisse",
-       tip:"Basar liegt steil in der Altstadt — zu Fuß oder mit Auto · früh hingehen für weniger Gedränge", dist:"Altstadt (auf der Route)", icon:"🧵"},
-      {name:"Lokale Lebensmittelläden (Unterstadt)", type:"Tagesversorgung", hours:"Meist 07:00–23:00 täglich",
+       tip:"Basar liegt steil in der Altstadt -- zu Fuß oder mit Auto · früh hingehen für weniger Gedränge", dist:"Altstadt (auf der Route)", icon:"🧵"},
+      {name:"Lokale Lebensmittelläden (Unterstadt)", type:"Tagesversorgung", hours:"Meist 07:00-23:00 täglich",
        offer:"Frisches Obst, Gemüse, Brot, Käse, Raki · direkt von lokalen Produzenten",
        tip:"Für echte lokale Produkte besser kleine Läden in der Unterstadt als im Basar", dist:"Auf der Route", icon:"🧀"},
     ]
   },
   {
-    city:"Saranda", emoji:"⛵", dates:"23.–25.06",
+    city:"Saranda", emoji:"⛵", dates:"23.-25.06",
     items:[
       {name:"Local Farmers Market (Rruga Jonianet)", type:"Bauernmarkt", hours:"Täglich · beste Zeit morgens",
        offer:"Obst, Gemüse, Nüsse, Gewürze, Blumen · Honig, Marmeladen, Olivenöl, Käse, Wein, Raki",
-       tip:"Morgens für frischste Ware · Achtung Touristenpreise — vergleichen und weiterziehen · Barzahlung", dist:"Stadtzentrum", icon:"🍅"},
+       tip:"Morgens für frischste Ware · Achtung Touristenpreise -- vergleichen und weiterziehen · Barzahlung", dist:"Stadtzentrum", icon:"🍅"},
       {name:"Waterfront-Markt (Promenade)", type:"Saisonaler Souvenirmarkt", hours:"Sommer täglich, tagsüber",
        offer:"Souvenirs, lokaler Raki & Honig, Miniatur-Bunker, Kunsthandwerk",
        tip:"Lockerere Atmosphäre als Bauernmarkt · direkt am Meer", dist:"Strandpromenade", icon:"🎨"},
     ]
   },
   {
-    city:"Berat (Zwischenstopp)", emoji:"🏰", dates:"Optional: 15.–18.06",
+    city:"Berat (Zwischenstopp)", emoji:"🏰", dates:"Optional: 15.-18.06",
     items:[
       {name:"Berat Markt (Innenstadt)", type:"Lokaler Markt & Kunsthandwerk", hours:"Täglich morgens",
        offer:"Frisches Obst & Gemüse aus der Region, Textilien, Holzmöbel · Handwerker verkaufen direkt",
@@ -471,8 +477,8 @@ function renderMarkets(){
   var h = '<div class="card card-green" style="margin-bottom:14px;">'+
     '<div class="lbl lgn">💡 Allgemeine Markt-Tipps</div>'+
     '<div style="font-size:12px;color:#b0a090;line-height:1.8;">'+
-    '🕗 Albanische Märkte öffnen früh (07–08 Uhr) — mittags am lebendigsten<br>'+
-    '💵 Immer Bargeld in <b>Lek</b> mitnehmen — Kartenzahlung selten<br>'+
+    '🕗 Albanische Märkte öffnen früh (07-08 Uhr) -- mittags am lebendigsten<br>'+
+    '💵 Immer Bargeld in <b>Lek</b> mitnehmen -- Kartenzahlung selten<br>'+
     '🤝 Preise sind oft verhandelbar, außer im renovierten Pazari i Ri Tirana<br>'+
     '🍅 Im Juni gibt es Tomaten, Paprika, Wassermelonen, Feigen, frischen Käse & Olivenöl in bester Qualität'+
     '</div></div>';
@@ -504,7 +510,7 @@ function renderMarkets(){
             '<span style="font-size:11px;color:#a0c8b0;">'+m.hours+'</span>'+
           '</div>'+
           '<div style="display:flex;gap:8px;align-items:flex-start;">'+
-            '<span style="font-size:11px;flex-shrink:0;min-width:16px;">🛍️</span>'+
+            '<span style="font-size:11px;flex-shrink:0;min-width:16px;">🛍</span>'+
             '<span style="font-size:11px;color:#b0a090;">'+m.offer+'</span>'+
           '</div>'+
           '<div style="display:flex;gap:8px;align-items:flex-start;">'+
@@ -529,19 +535,19 @@ function renderMarkets(){
 
 // Extended descriptions for each point
 var PT_DESC = {
-  p1:  'Albaniens lebendige Hauptstadt — osmanische Moscheen neben sozialistischen Betonriesen neben hippen Cafés. Bunk\'Art in einem echten Atomschutzbunker und der Skanderbeg-Platz sind Pflicht. Abends das Blloku-Viertel erkunden.',
-  p2:  'Stützpunkt für Berat — das "Weiße Städtchen" mit 2.400 Jahre alten Mauern ist UNESCO-Welterbe. Tagesausflug in den Osum Canyon: teils waten, teils schwimmen durch türkisblaues Wasser.',
+  p1:  'Albaniens lebendige Hauptstadt -- osmanische Moscheen neben sozialistischen Betonriesen neben hippen Cafés. Bunk\'Art in einem echten Atomschutzbunker und der Skanderbeg-Platz sind Pflicht. Abends das Blloku-Viertel erkunden.',
+  p2:  'Stützpunkt für Berat -- das "Weiße Städtchen" mit 2.400 Jahre alten Mauern ist UNESCO-Welterbe. Tagesausflug in den Osum Canyon: teils waten, teils schwimmen durch türkisblaues Wasser.',
   p3:  'Die "Stadt der 1000 Treppen" thront auf einem Bergrücken. Osmanische Steinhäuser mit Schieferdächern, eine mächtige Burg mit Cold-War-Bunker darunter, und abends gehört die Altstadt euch allein.',
   p4:  'Herz der albanischen Riviera. Unberührte Buchten, kristallklares Ionisches Meer, kleine Fischtavernen direkt am Wasser. Basis für Strandhopping und die spektakuläre Burg über der Stadt.',
-  p5:  'Lebhafteste Küstenstadt des Südens. Sprungbrett für Ksamil-Inseln, Butrint und — mit der Fähre — sogar Korfu. Die Strandpromenade lädt abends zum typisch albanischen Xhiro-Spaziergang ein.',
+  p5:  'Lebhafteste Küstenstadt des Südens. Sprungbrett für Ksamil-Inseln, Butrint und -- mit der Fähre -- sogar Korfu. Die Strandpromenade lädt abends zum typisch albanischen Xhiro-Spaziergang ein.',
   p6:  'Letzte Nacht vor dem Abflug, ruhige Vorortlage nahe dem Flughafen. Zeit für letzte Souvenirs im Pazari i Ri und ein abschließendes Tave Kosi im Blloku.',
   p7:  'UNESCO-Doppelwelterbe: sowohl Berat als auch Gjirokastër. Die Burg thront über der Stadt, das Ethnografische Museum gilt als eines der schönsten auf dem Balkan. Highlight: Osum Canyon direkt nebenan.',
-  p8:  'Der dramatischste Punkt der Reise: Serpentinen auf 1.000m, Abgründe links, Felsnadeln rechts. Oben gibt es eine Passhöhe mit atemberaubendem Blick auf beide Küsten — unbedingt anhalten und fotografieren.',
-  p9:  'Vier kleine Inseln im türkisfarbenen Ionischen Meer, nur per Boot erreichbar. Das Wasser ist so klar, dass man den Grund in 5m Tiefe sieht. Im Juni noch halbwegs ruhig — morgens früh kommen.',
-  p10: 'Antike Ruinenstadt auf einer Halbinsel zwischen Lagune und Meer. Griechische Stadtmauern, römische Thermen, venezianische Türme — 2.500 Jahre Geschichte auf kleinstem Raum. Früh morgens besuchen.',
+  p8:  'Der dramatischste Punkt der Reise: Serpentinen auf 1.000m, Abgründe links, Felsnadeln rechts. Oben gibt es eine Passhöhe mit atemberaubendem Blick auf beide Küsten -- unbedingt anhalten und fotografieren.',
+  p9:  'Vier kleine Inseln im türkisfarbenen Ionischen Meer, nur per Boot erreichbar. Das Wasser ist so klar, dass man den Grund in 5m Tiefe sieht. Im Juni noch halbwegs ruhig -- morgens früh kommen.',
+  p10: 'Antike Ruinenstadt auf einer Halbinsel zwischen Lagune und Meer. Griechische Stadtmauern, römische Thermen, venezianische Türme -- 2.500 Jahre Geschichte auf kleinstem Raum. Früh morgens besuchen.',
   p11: 'Langer, breiter Strand mit türkisblauem Wasser und einer byzantinischen Kirche im Olivenhain darüber. 15 Minuten nördlich von Himara, einer der schönsten Strände der gesamten Riviera.',
   p12: 'Albaniens Unabhängigkeitsstadt. Flagge zuerst gehisst 1912. Schöner Rundturm am Hafen, entspannte Café-Promenade. Idealer Mittags-Zwischenstopp auf der Rückfahrt nach Tirana.',
-  p13: 'Die dreieckige Festung von Ali Pascha auf einer felsigen Halbinsel — direkt von der Küstenstraße sichtbar. Perfekter Fotostopp, kaum Touristen, freier Eintritt. Dahinter liegt eine ruhige Bucht zum Schwimmen.',
+  p13: 'Die dreieckige Festung von Ali Pascha auf einer felsigen Halbinsel -- direkt von der Küstenstraße sichtbar. Perfekter Fotostopp, kaum Touristen, freier Eintritt. Dahinter liegt eine ruhige Bucht zum Schwimmen.',
 };
 
 function mapClick(id){
@@ -568,13 +574,14 @@ function mapClick(id){
   var pt=ALL_POINTS.filter(function(p){return p.id===mapActiveId;})[0];
   if(!pt) return;
 
-  // Draw leader line
+  // Draw leader line -- anchor from the dot in the panel
   var pp=mp(pt.la,pt.ln);
   var px=+pp[0], py=+pp[1];
   var idx=ALL_POINTS.indexOf(pt);
-  var panelX=MW-8;
-  var panelY=16+idx*20+10;
-  ln.setAttribute('d','M'+panelX+','+panelY+' C'+(px+80)+','+panelY+' '+(px+40)+','+py+' '+px+','+py);
+  var panelW=118, panelLeftX=MW-panelW-4;
+  var anchorX=panelLeftX+10;       // dot center x
+  var anchorY=4+10+idx*20+5;       // dot center y: panelY+10+i*20+5
+  ln.setAttribute('d','M'+anchorX+','+anchorY+' C'+(anchorX-50)+','+anchorY+' '+(px+50)+','+py+' '+px+','+py);
   ln.setAttribute('stroke', pt.col);
   ol.setAttribute('opacity','1');
 
@@ -609,7 +616,7 @@ function buildMap(){
   var snow=SNOW.map(function(m){var p=mp(m[0],m[1]);return '<ellipse cx="'+p[0]+'" cy="'+p[1]+'" rx="'+m[2]+'" ry="'+m[3]+'" fill="#dde8dd" opacity="0.5" clip-path="url(#mc)"/>';}).join('');
   var rivers=RIVERS.map(function(r){return '<polyline points="'+mpts(r)+'" fill="none" stroke="#1a4060" stroke-width="1.2" opacity="0.6" stroke-linecap="round" clip-path="url(#mc)"/>';}).join('');
 
-  // Markers — no inline labels
+  // Markers -- no inline labels
   var markers=ALL_POINTS.map(function(pt){
     var p=mp(pt.la,pt.ln),x=+p[0],y=+p[1];
     var isAcc=pt.r>8;
@@ -631,18 +638,20 @@ function buildMap(){
     '<circle id="map-leader-dot" cx="0" cy="0" r="0" fill="white" opacity="0.6"/>'+
     '</g>';
 
-  // Panel background — top right, semi-transparent
-  var panelW=118, panelH=ALL_POINTS.length*20+10, panelX=MW-panelW-4, panelY=4;
+  // Panel background -- top right, semi-transparent
+  var panelW=118, panelH=ALL_POINTS.length*20+14, panelX=MW-panelW-4, panelY=4;
   var panel=
-    '<rect x="'+panelX+'" y="'+panelY+'" width="'+panelW+'" height="'+panelH+'" rx="7" fill="rgba(4,6,3,0.82)" stroke="rgba(200,169,110,0.2)" stroke-width="0.8"/>'+
+    '<rect x="'+panelX+'" y="'+panelY+'" width="'+panelW+'" height="'+panelH+'" rx="7" fill="rgba(4,6,3,0.85)" stroke="rgba(200,169,110,0.25)" stroke-width="0.8"/>'+
     ALL_POINTS.map(function(pt,i){
-      var iy=panelY+10+i*20;
+      // anchorY must match mapClick: panelY+10+i*20+5 = 19+i*20
+      var iy=panelY+10+i*20;  // top of row
       var dotX=panelX+10, labelX=panelX+20;
+      var dotY=iy+5;  // dot center = anchorY in mapClick
       return (
         '<g onclick="mapClick(\''+pt.id+'\')" style="cursor:pointer;">'+
-        '<rect id="mplbg-'+pt.id+'" x="'+panelX+'" y="'+(iy-9)+'" width="'+panelW+'" height="18" rx="3" fill="transparent"/>'+
-        '<circle cx="'+dotX+'" cy="'+(iy+1)+'" r="4" fill="'+pt.col+'" opacity="0.9"/>'+
-        '<text x="'+labelX+'" y="'+(iy+5)+'" fill="'+pt.col+'" font-size="8.5" font-family="Georgia" font-weight="'+(pt.r>8?'bold':'400')+'" style="pointer-events:none;">'+pt.label+'</text>'+
+        '<rect id="mplbg-'+pt.id+'" x="'+panelX+'" y="'+iy+'" width="'+panelW+'" height="18" rx="3" fill="transparent"/>'+
+        '<circle cx="'+dotX+'" cy="'+dotY+'" r="4" fill="'+pt.col+'" opacity="0.9"/>'+
+        '<text x="'+labelX+'" y="'+(dotY+4)+'" fill="'+pt.col+'" font-size="8.5" font-family="Georgia" font-weight="'+(pt.r>8?'bold':'400')+'" style="pointer-events:none;">'+pt.label+'</text>'+
         '</g>'
       );
     }).join('');
@@ -671,7 +680,7 @@ function buildMap(){
   // Route time labels
   var routeLabels=[
     {la:41.0,ln:19.87,t:'2 Std.',c:'#ef4444'},{la:40.38,ln:20.03,t:'2 Std.',c:'#ef4444'},
-    {la:40.09,ln:19.95,t:'2 Std.',c:'#ef4444'},{la:40.45,ln:19.51,t:'6–7h',c:'#fb923c'}
+    {la:40.09,ln:19.95,t:'2 Std.',c:'#ef4444'},{la:40.45,ln:19.51,t:'6-7h',c:'#fb923c'}
   ];
   var rtl=routeLabels.map(function(rl){
     var p=mp(rl.la,rl.ln),x=+p[0],y=+p[1],lw=rl.t.length*5.5+8;
@@ -692,11 +701,13 @@ function buildMap(){
     mt1+mt2+snow+rivers+
     '<polygon points="'+bP+'" fill="none" stroke="#1e5070" stroke-width="10" opacity="0.15"/>'+
     '<polygon points="'+bP+'" fill="none" stroke="#5a7040" stroke-width="1.5"/>'+
-    '<text x="'+mp(42.1,20.5)[0]+'" y="'+mp(42.1,20.5)[1]+'" fill="#243020" font-size="7" font-family="Georgia" opacity="0.6">NORDMAZEDONIEN</text>'+
-    '<text x="'+mp(42.4,19.6)[0]+'" y="'+mp(42.4,19.6)[1]+'" fill="#243020" font-size="7" font-family="Georgia" opacity="0.6">MONTENEGRO</text>'+
+    '<text x="8" y="200" fill="#142535" font-size="9" font-style="italic" font-family="Georgia" transform="rotate(-12,8,200)">Adriatisches</text>'+
+    '<text x="8" y="212" fill="#142535" font-size="9" font-style="italic" font-family="Georgia" transform="rotate(-12,8,212)">Meer</text>'+
+    '<text x="8" y="430" fill="#142535" font-size="9" font-style="italic" font-family="Georgia" transform="rotate(-12,8,430)">Ionisches</text>'+
+    '<text x="8" y="442" fill="#142535" font-size="9" font-style="italic" font-family="Georgia" transform="rotate(-12,8,442)">Meer</text>'+
+    '<text x="'+mp(42.1,20.5)[0]+'" y="'+mp(42.1,20.5)[1]+'" fill="#243020" font-size="7" font-family="Georgia" opacity="0.6">N.MAZEDONIEN</text>'+
+    '<text x="'+mp(41.9,20.1)[0]+'" y="'+mp(41.9,20.1)[1]+'" fill="#243020" font-size="7" font-family="Georgia" opacity="0.6">MONTENEGRO</text>'+
     '<text x="'+mp(39.8,20.5)[0]+'" y="'+mp(39.8,20.5)[1]+'" fill="#243020" font-size="7" font-family="Georgia" opacity="0.6">GRIECHENLAND</text>'+
-    '<text x="'+mp(41.2,18.72)[0]+'" y="'+mp(41.2,18.72)[1]+'" fill="#142535" font-size="9" font-style="italic" font-family="Georgia" transform="rotate(-12,'+mp(41.2,18.72)[0]+','+mp(41.2,18.72)[1]+')">Adriatisches Meer</text>'+
-    '<text x="'+mp(39.9,18.8)[0]+'" y="'+mp(39.9,18.8)[1]+'" fill="#142535" font-size="9" font-style="italic" font-family="Georgia" transform="rotate(-12,'+mp(39.9,18.8)[0]+','+mp(39.9,18.8)[1]+')">Ionisches Meer</text>'+
     '<polyline points="'+hP+'" fill="none" stroke="#000" stroke-width="7" opacity="0.45" stroke-linecap="round" stroke-linejoin="round"/>'+
     '<polyline points="'+rP+'" fill="none" stroke="#000" stroke-width="7" opacity="0.4" stroke-linecap="round" stroke-linejoin="round"/>'+
     '<polyline points="'+hP+'" fill="none" stroke="#ef4444" stroke-width="4" opacity="0.95" stroke-linecap="round" stroke-linejoin="round" filter="url(#gw)"/>'+
@@ -713,17 +724,241 @@ function buildMap(){
     '<svg id="map-svg" viewBox="0 0 '+MW+' '+MH+'" width="'+MW+'" style="max-width:100%;border-radius:14px;display:block;box-shadow:0 16px 60px rgba(0,0,0,0.95);">'+
     svgContent+
     '</svg></div>'+
-    '<div style="font-size:10px;color:#4a3a28;font-style:italic;margin-top:8px;text-align:center;">👆 Namen im Panel antippen — Linie + Info erscheinen</div>'
+    '<div style="font-size:10px;color:#4a3a28;font-style:italic;margin-top:8px;text-align:center;">👆 Namen im Panel antippen -- Linie + Info erscheinen</div>'
   );
 }
 
-// ── COUNTDOWN ────────────────────────────────────────────────────────────────
+// ── SPRACHFÜHRER DATA ────────────────────────────────────────────────────────
+var PHRASES = [
+  {cat:'👋 Begrüßung', items:[
+    {de:'Hallo',        al:'Përshëndetje', pron:'Per-shen-DE-tje'},
+    {de:'Guten Morgen', al:'Mirëmëngjes',  pron:'Mire-MEN-gjes'},
+    {de:'Guten Tag',    al:'Mirëdita',     pron:'Mire-DI-ta'},
+    {de:'Guten Abend',  al:'Mirëmbrëma',   pron:'Mire-MBR-ma'},
+    {de:'Auf Wiedersehen',al:'Mirupafshim', pron:'Mi-ru-PAF-shim'},
+    {de:'Tschüss',      al:'Bye / Ciao',   pron:'Bye / Tschau'},
+  ]},
+  {cat:'🙏 Höflichkeit', items:[
+    {de:'Danke',           al:'Faleminderit',  pron:'Fa-le-min-DE-rit'},
+    {de:'Bitte',           al:'Ju lutem',      pron:'Yu LU-tem'},
+    {de:'Entschuldigung',  al:'Më falni',      pron:'Me FAL-ni'},
+    {de:'Ja / Nein',       al:'Po / Jo',       pron:'Po / Yo'},
+    {de:'Kein Problem',    al:'Nuk ka problem',pron:'Nuk ka pro-BLEM'},
+  ]},
+  {cat:'🍽 Restaurant & Essen', items:[
+    {de:'Die Rechnung bitte', al:'Llogarinë, ju lutem', pron:'Llo-ga-RI-ne, yu LU-tem'},
+    {de:'Sehr lecker!',       al:'Shumë e mirë!',       pron:'SHU-me e MI-re'},
+    {de:'Wasser',             al:'Ujë',                 pron:'U-ye'},
+    {de:'Bier / Wein',        al:'Birrë / Verë',        pron:'BI-rre / VE-re'},
+    {de:'Ohne Fleisch',       al:'Pa mish',             pron:'Pa mish'},
+    {de:'Ich bin allergisch', al:'Jam alergjik',         pron:'Yam a-ler-GYIK'},
+  ]},
+  {cat:'🗺 Unterwegs', items:[
+    {de:'Wo ist...?',        al:'Ku është...?',      pron:'Ku ESH-te'},
+    {de:'Wie weit ist es?',  al:'Sa larg është?',    pron:'Sa larg ESH-te'},
+    {de:'Links / Rechts',    al:'Majtas / Djathtas', pron:'MAY-tas / DYATH-tas'},
+    {de:'Geradeaus',         al:'Drejt',             pron:'Dreyt'},
+    {de:'Halt! Stop!',       al:'Ndal!',             pron:'Ndal'},
+    {de:'Parkplatz',         al:'Parkim',            pron:'Par-KIM'},
+  ]},
+  {cat:'🏖 Strand & Meer', items:[
+    {de:'Wie tief ist das Wasser?',al:'Sa thellë është uji?', pron:'Sa THEL-le ESH-te U-yi'},
+    {de:'Bootsfahrt',              al:'Udhëtim me varkë',     pron:'Ud-he-TIM me VAR-ke'},
+    {de:'Sonnenschirm',            al:'Çadër dielli',         pron:'CHA-der DIEL-li'},
+    {de:'Handtuch',                al:'Peshqir',              pron:'Pesh-QEER'},
+  ]},
+  {cat:'🚨 Notfall', items:[
+    {de:'Hilfe!',            al:'Ndihmë!',          pron:'NDIH-me'},
+    {de:'Rufen Sie die Polizei!',al:'Thirrni policinë!', pron:'THIRR-ni po-li-TZI-ne'},
+    {de:'Arzt / Krankenhaus',al:'Mjek / Spital',    pron:'Myek / Spi-TAL'},
+    {de:'Ich brauche Hilfe', al:'Kam nevojë për ndihmë', pron:'Kam ne-VO-ye per NDIH-me'},
+    {de:'Unfall',            al:'Aksident',          pron:'Ak-si-DENT'},
+  ]},
+  {cat:'💰 Einkaufen & Markt', items:[
+    {de:'Wie viel kostet das?', al:'Sa kushton?',       pron:'Sa KUSH-ton'},
+    {de:'Zu teuer!',            al:'Shumë shtrenjtë!',  pron:'SHU-me SHTRENY-te'},
+    {de:'Kann ich handeln?',    al:'Mund ta zbritem?',  pron:'Mund ta ZBR-tem'},
+    {de:'Ich nehme es',         al:'E marr këtë',       pron:'E marr ke-TE'},
+    {de:'Bargeld',              al:'Para cash / Lekë',  pron:'PA-ra cash / LE-ke'},
+  ]},
+];
+
+// ── TAGESANSICHT DATA ────────────────────────────────────────────────────────
+var TRIP_START = new Date('2026-06-12');
+var TRIP_END   = new Date('2026-06-26');
+
+var DAY_PLANS = [
+  // Tag 1-3: Tirana
+  {day:1,  city:'Tirana',      stop:'t1', highlights:['Ankunft 23:30 Uhr -- Check-in, Ausruhen','Morgen: Bunk\'Art 2 in der Innenstadt -- früh hingehen','Skanderbeg-Platz abends bei Sonnenuntergang']},
+  {day:2,  city:'Tirana',      stop:'t1', highlights:['Bunk\'Art 1 -- Atomschutzbunker (mind. 2h)','Dajti-Berg Gondel -- Panoramablick','Abendessen: Restaurant Tymi -- käsegefüllte Spitzpaprika']},
+  {day:3,  city:'Tirana',      stop:'t1', highlights:['Pazari i Ri -- Bauernmarkt morgens (08-10 Uhr)','Nationales Historisches Museum','Blloku-Viertel erkunden']},
+  // Tag 4: Umzug → Lumas
+  {day:4,  city:'Tirana → Lumas', stop:'lu', highlights:['🚗 Abfahrt früh -- ~2 Std. Fahrt','Ankunft Lumas -- Check-in ab 15:00 Uhr','Abendessen: Lokales Restaurant in Berat erkunden']},
+  // Tag 5-6: Lumas / Berat
+  {day:5,  city:'Lumas / Berat',  stop:'lu', highlights:['Berat Altstadt & Burg -- nachmittags (Busse weg)','Gorica-Brücke -- bester Fotomoment der Stadt','Weingut Cobo Winery -- Gratis-Führung']},
+  {day:6,  city:'Lumas / Berat',  stop:'lu', highlights:['Osum Canyon -- Wasserschuhe & Wechselkleidung!','Ethnografisches Museum Berat','Abends: lokaler Raki-Verkoster']},
+  // Tag 7: Umzug → Gjirokastër
+  {day:7,  city:'Lumas → Gjirokastër', stop:'gj', highlights:['🚗 Abfahrt früh -- ~2 Std. Fahrt','Gjirokastër Burg & Bunker -- direkt nach Ankunft','Abends: Basar-Gasse -- gehört euch allein']},
+  // Tag 8-9: Gjirokastër
+  {day:8,  city:'Gjirokastër',  stop:'gj', highlights:['Osmanische Altstadt -- Stadt der 1000 Treppen','Skenduli-Haus (17. Jh.)','Restaurant Odaja -- Terrasse mit Burgblick']},
+  {day:9,  city:'Gjirokastër',  stop:'gj', highlights:['⚠ Check-out 08-11 Uhr!','Qafa e Pazarit (Alter Basar) -- früh hingehen','🚗 Abfahrt Richtung Himara -- Llogara-Pass!']},
+  // Tag 10: Umzug → Himara
+  {day:10, city:'Gjirokastër → Himara', stop:'hi', highlights:['🚗 Llogara-Pass -- VOR 10 Uhr starten!','Fotostopp am Pass -- 20-30 Min. einplanen','Check-in Himara ab 14 Uhr']},
+  // Tag 11-12: Himara
+  {day:11, city:'Himara',       stop:'hi', highlights:['Gjipe Beach -- 40 Min. Canyon-Wanderung','Strandhopping: Livadhi → Potam → Spile','Sonnenuntergang von der Himara-Burg']},
+  {day:12, city:'Himara',       stop:'hi', highlights:['Dhermi Beach -- 15 Min. nördlich','Vuno -- kleines Hügeldorf, kaum Touristen','Bootstour vorgebucht? ✓']},
+  // Tag 13: Umzug → Saranda
+  {day:13, city:'Himara → Saranda', stop:'sa', highlights:['🚗 ~1 Std. Fahrt -- angenehm kurz','Check-in Saranda ab 14 Uhr','Waterfront-Markt -- Souvenirs & Raki']},
+  // Tag 14: Saranda
+  {day:14, city:'Saranda',      stop:'sa', highlights:['Butrint -- 08:00 Uhr morgens!','Ksamil-Inseln Bootsfahrt nachmittags','Lëkurësi-Burg: Sonnenuntergang über Korfu']},
+  // Tag 15-16 Lücke (nach Itinerar kein Tag 15 Saranda)
+  // Tag 15: Rückfahrt
+  {day:15, city:'Saranda → Tirana', stop:'t2', highlights:['⚠ Abfahrt 07:00 Uhr -- Küstenroute!','Porto Palermo Fotostopp','Vlora Mittagsstopp -- Llogara-Pass nochmals']},
+];
+
+function renderToday(){
+  var now = new Date();
+  now.setHours(0,0,0,0);
+  var start = new Date(TRIP_START);
+  start.setHours(0,0,0,0);
+  var diff = Math.floor((now-start)/86400000)+1;
+
+  // Before trip
+  if(diff < 1){
+    var daysLeft = Math.ceil((start-now)/86400000);
+    return '<div class="card" style="text-align:center;padding:32px 20px;">'+
+      '<div style="font-size:48px;margin-bottom:12px;">🗓</div>'+
+      '<div style="font-size:22px;color:#f0e6d0;margin-bottom:6px;">Noch <span style="color:var(--gold);">'+daysLeft+'</span> Tage</div>'+
+      '<div style="font-size:13px;color:var(--m);">bis zum Abflug am 12. Juni 2026</div>'+
+      '<div style="margin-top:20px;font-size:11px;color:var(--s);font-style:italic;">Die Tagesansicht wird aktiv sobald die Reise beginnt</div>'+
+      '</div>';
+  }
+
+  // After trip
+  if(diff > 15){
+    return '<div class="card" style="text-align:center;padding:32px 20px;">'+
+      '<div style="font-size:48px;margin-bottom:12px;">🏠</div>'+
+      '<div style="font-size:20px;color:#f0e6d0;margin-bottom:6px;">Reise beendet</div>'+
+      '<div style="font-size:13px;color:var(--m);">Hoffentlich war es unvergesslich! 🇦🇱</div>'+
+      '</div>';
+  }
+
+  var plan = DAY_PLANS[diff-1];
+  var stop = STOPS.filter(function(s){return s.id===plan.stop;})[0];
+  var acc  = ACC.filter(function(a,i){
+    if(plan.stop==='t1') return i===0;
+    if(plan.stop==='lu') return i===1;
+    if(plan.stop==='gj') return i===2;
+    if(plan.stop==='hi') return i===3;
+    if(plan.stop==='sa') return i===4;
+    if(plan.stop==='t2') return i===5;
+    return false;
+  })[0];
+
+  var mapsUrl = acc ? 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(acc.addr) : '';
+
+  return (
+    // Day header
+    '<div style="background:linear-gradient(135deg,rgba(200,169,110,0.1),rgba(200,169,110,0.05));border:1px solid var(--gb);border-radius:var(--r);padding:18px;margin-bottom:12px;">'+
+      '<div style="font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Tag '+diff+' von 15</div>'+
+      '<div style="font-size:22px;color:#f0e6d0;margin-bottom:2px;">'+plan.city+'</div>'+
+      '<div style="font-size:11px;color:var(--m);">'+new Date().toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'})+'</div>'+
+    '</div>'+
+
+    // Check-out warning if applicable
+    (acc && acc.co !== '--' ? '<div class="card card-red" style="display:flex;align-items:center;gap:10px;padding:12px 14px;margin-bottom:12px;">'+
+      '<span style="font-size:20px;">⏰</span>'+
+      '<div><div style="font-size:12px;color:#e07050;font-weight:bold;">Check-out heute</div>'+
+      '<div style="font-size:11px;color:#c09080;">bis '+acc.co+' Uhr · '+acc.c+'</div></div>'+
+    '</div>' : '')+
+
+    // Today's highlights
+    '<div class="card" style="margin-bottom:12px;">'+
+      '<div class="lbl lg">📋 Heutiges Programm</div>'+
+      plan.highlights.map(function(h,i){
+        return '<div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:'+(i<plan.highlights.length-1?'1px solid rgba(255,255,255,0.05)':'none')+';">'+
+          '<div style="width:20px;height:20px;border-radius:50%;background:rgba(200,169,110,0.15);border:1px solid var(--gb);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;color:var(--gold);flex-shrink:0;margin-top:1px;">'+(i+1)+'</div>'+
+          '<div style="font-size:13px;color:#d0c0a8;line-height:1.5;">'+h+'</div>'+
+        '</div>';
+      }).join('')+
+    '</div>'+
+
+    // Unterkunft + Navigation
+    (acc ? '<div class="card card-blue" style="margin-bottom:12px;">'+
+      '<div class="lbl lb">🏠 Heutige Unterkunft</div>'+
+      '<div style="font-size:14px;color:#f0e6d0;margin-bottom:4px;">'+acc.c+'</div>'+
+      '<div style="font-size:11px;color:var(--m);margin-bottom:8px;font-style:italic;">📍 '+acc.addr+'</div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;">'+
+        '<a href="'+mapsUrl+'" target="_blank" style="display:flex;align-items:center;gap:6px;background:#1d4ed8;color:white;padding:9px 14px;border-radius:8px;font-size:12px;text-decoration:none;font-family:Georgia,serif;">'+
+          '🧭 Navigieren'+
+        '</a>'+
+        '<a href="https://maps.apple.com/?q='+encodeURIComponent(acc.addr)+'" target="_blank" style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);color:#93c5fd;padding:9px 14px;border-radius:8px;font-size:12px;text-decoration:none;border:1px solid rgba(59,130,246,0.3);font-family:Georgia,serif;">'+
+          '🍎 Apple Maps'+
+        '</a>'+
+      '</div>'+
+    '</div>' : '')+
+
+    // Quick weather for today's city
+    (function(){
+      var wx=WX.filter(function(w){return plan.city.toLowerCase().indexOf(w.c.toLowerCase().split('/')[0].trim())>=0;})[0]||WX[0];
+      return '<div class="card" style="display:flex;gap:14px;align-items:center;">'+
+        '<div style="font-size:28px;">'+wx.i+'</div>'+
+        '<div>'+
+          '<div style="font-size:11px;color:var(--m);">Wetter heute in '+plan.city.split('→')[plan.city.includes('→')?1:0].trim()+'</div>'+
+          '<div style="font-size:14px;color:#f97316;margin-top:2px;">max. '+wx.hi+'degC <span style="color:#93c5fd;font-size:12px;">/ min. '+wx.lo+'degC</span></div>'+
+          '<div style="font-size:11px;color:var(--m);margin-top:2px;">☀ '+wx.sun+'h Sonne · 🌧 '+wx.r+' Regentag(e)'+(wx.sea?' · 🌊 Meer '+wx.sea+'degC':'')+' </div>'+
+        '</div>'+
+      '</div>';
+    })()+
+
+    // Emergency numbers quick access
+    '<div class="card card-green" style="margin-top:12px;">'+
+      '<div class="lbl lgn">📞 Schnellwahl</div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;">'+
+      [['🚨 Notruf','tel:112','#ef4444'],['👮 Polizei','tel:129','#f97316'],['🚗 DiscoverCars','tel:+18882235555','#C8A96E']]
+      .map(function(b){return '<a href="'+b[1]+'" style="display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:'+b[2]+';padding:8px 12px;border-radius:8px;font-size:11px;text-decoration:none;font-family:Georgia,serif;">'+b[0]+'</a>';}).join('')+
+      '</div>'+
+    '</div>'
+  );
+}
+
+function renderLanguage(){
+  var h='<div class="card card-green" style="margin-bottom:14px;">'+
+    '<div class="lbl lgn">🗣 Albanisch -- Tipps</div>'+
+    '<div style="font-size:12px;color:#b0a090;line-height:1.8;">'+
+    '• Albanisch ist eine einzigartige Sprachfamilie -- kein Slawisch, kein Türkisch<br>'+
+    '• "Rr" klingt wie ein gerolltes R -- üben lohnt sich<br>'+
+    '• "Q" klingt wie ein weiches "Tsch"<br>'+
+    '• Schon wenige Worte werden von Albanern sehr geschätzt!<br>'+
+    '• Englisch wird in Touristenzentren meist gesprochen'+
+    '</div></div>';
+
+  PHRASES.forEach(function(cat){
+    h+='<div style="margin-bottom:16px;">'+
+      '<div style="font-size:13px;color:var(--gold);letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--gb);">'+cat.cat+'</div>'+
+      cat.items.map(function(p){
+        return '<div style="display:flex;gap:0;margin-bottom:1px;border-radius:8px;overflow:hidden;">'+
+          '<div style="flex:1;background:rgba(255,255,255,0.02);padding:9px 12px;">'+
+            '<div style="font-size:12px;color:#b0a090;">'+p.de+'</div>'+
+          '</div>'+
+          '<div style="flex:1;background:rgba(200,169,110,0.06);padding:9px 12px;border-left:1px solid rgba(200,169,110,0.1);">'+
+            '<div style="font-size:12px;color:#f0e6d0;font-weight:bold;">'+p.al+'</div>'+
+            '<div style="font-size:10px;color:var(--m);font-style:italic;margin-top:2px;">['+p.pron+']</div>'+
+          '</div>'+
+        '</div><div style="height:2px;"></div>';
+      }).join('')+
+    '</div>';
+  });
+  return h;
+}
+
+
 var DEP = new Date("2026-06-12T19:30:00");
 function tick(){
   var el=document.getElementById('cd');
   if(!el)return;
   var diff=DEP-new Date();
-  if(diff<=0){el.innerHTML='<span style="color:#6BAF8C;font-size:14px;">✈️ Gute Reise!</span>';return;}
+  if(diff<=0){el.innerHTML='<span style="color:#6BAF8C;font-size:14px;">✈ Gute Reise!</span>';return;}
   var d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
   var boxes=[{v:d,l:'Tage'},{v:h,l:'Std.'},{v:m,l:'Min.'},{v:s,l:'Sek.'}];
   el.innerHTML=boxes.map(function(x){return '<div class="cb"><div class="cv">'+String(x.v).padStart(2,'0')+'</div><div class="cl">'+x.l+'</div></div>';}).join('')+'<div style="font-size:9px;color:var(--s);margin-top:5px;align-self:flex-end;">Abflug 12.06.2026 · 19:30</div>';
@@ -741,14 +976,27 @@ function showTab(id){
   var c=document.getElementById('ct');
   c.scrollTop=0;
   var html='';
-  if(id==='route') html=renderRoute();
-  else if(id==='stops') html=renderStops();
-  else if(id==='dist') html=renderDist();
-  else if(id==='acc') html=renderAcc();
-  else if(id==='wx') html=renderWx();
-  else if(id==='map') html=buildMap();
-  else if(id==='markets') html=renderMarkets();
+  if(id==='route')    html=renderRoute();
+  else if(id==='today')    html=renderToday();
+  else if(id==='stops')    html=renderStops();
+  else if(id==='dist')     html=renderDist();
+  else if(id==='acc')      html=renderAcc();
+  else if(id==='wx')       html=renderWx();
+  else if(id==='map')      html=buildMap();
+  else if(id==='markets')  html=renderMarkets();
+  else if(id==='language') html=renderLanguage();
+  else if(id==='exchange') { html=renderExchange(); }
+  else if(id==='checklist'){ html=renderChecklist(); }
+  else if(id==='tips')     html=renderTips();
   c.innerHTML=html;
+  // Auto-fetch exchange rate when tab opens
+  if(id==='exchange') setTimeout(fetchRate,100);
+  // Restore map state after re-render
+  if(id==='map' && mapActiveId){
+    var savedId=mapActiveId;
+    mapActiveId=null;
+    mapClick(savedId);
+  }
 }
 
 function toggleStop(id){
@@ -770,7 +1018,7 @@ function renderRoute(){
     h+='<div class="sc">';
     h+='<div class="sl2"><div class="sd" style="background:'+s.color+'22;border:2px solid '+s.color+';">'+s.emoji+'</div>'+(last?'':'<div class="sco"></div>')+'</div>';
     h+='<div class="sb2">';
-    if(s.drive)h+='<div style="font-size:10px;color:'+(s.drive.warn?'#e07050':'#5a4a38')+';margin-bottom:5px;">↓ '+s.drive.k+' · '+s.drive.b+(s.drive.warn?' · ⚠️ '+s.drive.warn:'')+'</div>';
+    if(s.drive)h+='<div style="font-size:10px;color:'+(s.drive.warn?'#e07050':'#5a4a38')+';margin-bottom:5px;">↓ '+s.drive.k+' · '+s.drive.b+(s.drive.warn?' · ⚠ '+s.drive.warn:'')+'</div>';
     h+='<div class="card" style="border-color:'+s.color+'44;">';
     h+='<div style="font-size:17px;color:#f0e6d0;">'+s.city+'</div>';
     h+='<div style="font-size:11px;color:'+s.color+';margin-top:2px;">'+s.dates+' · '+s.nights+' Nächte</div>';
@@ -789,7 +1037,7 @@ function renderStops(){
       s.activities.map(function(a){return '<div class="ai"><div class="an">'+a.n+'</div><div class="at">'+a.t+'</div><div class="ap">💡 '+a.p+'</div></div>';}).join('')+
       '<div class="lbl lgn" style="margin-top:12px;">✨ Geheimtipps</div>'+
       s.tips.map(function(t){return '<div class="ti">'+t+'</div>';}).join('')+
-      '<div class="lbl lr" style="margin-top:12px;">⚠️ Zu beachten</div>'+
+      '<div class="lbl lr" style="margin-top:12px;">⚠ Zu beachten</div>'+
       s.warns.map(function(w){return '<div class="wi">'+w+'</div>';}).join('')+
       '</div>'):'';
     return '<div id="stop-'+s.id+'" class="card" style="border-color:'+s.color+'44;padding:0;overflow:hidden;margin-bottom:10px;">'+
@@ -801,12 +1049,12 @@ function renderStops(){
 }
 
 function renderDist(){
-  return '<div style="font-size:11px;color:var(--m);font-style:italic;margin-bottom:14px;">20–40% mehr Zeit als GPS zeigt.</div>'+
+  return '<div style="font-size:11px;color:var(--m);font-style:italic;margin-bottom:14px;">20-40% mehr Zeit als GPS zeigt.</div>'+
     '<div style="overflow-x:auto;"><table><thead><tr><th>Strecke</th><th>km</th><th style="color:#6BAF8C;">Gut</th><th style="color:#e07050;">Schlecht</th><th style="color:var(--gold);">Stops</th></tr></thead><tbody>'+
     DIST.map(function(r){return '<tr><td style="color:#f0e6d0;">'+r.f+' → '+r.t+'</td><td style="color:var(--m);">'+r.k+'</td><td style="color:#6BAF8C;">'+r.b+'</td><td style="color:#e07050;">'+r.w+'</td><td style="color:var(--gold);">'+r.s+'</td></tr>';}).join('')+
     '</tbody></table></div>'+
-    '<div class="card card-red" style="margin-top:14px;"><div class="lbl lr">⚠️ Hinweise</div>'+
-    '<div style="font-size:11px;color:#c09080;line-height:1.8;">• Gjirokastër→Himara: Llogara-Pass vor 10 Uhr<br>• Saranda→Tirana: Frühstart 07:00 Uhr<br>• Rush Hour Tirana: 07:30–09:00 & 16:30–19:00</div></div>';
+    '<div class="card card-red" style="margin-top:14px;"><div class="lbl lr">⚠ Hinweise</div>'+
+    '<div style="font-size:11px;color:#c09080;line-height:1.8;">• Gjirokastër→Himara: Llogara-Pass vor 10 Uhr<br>• Saranda→Tirana: Frühstart 07:00 Uhr<br>• Rush Hour Tirana: 07:30-09:00 & 16:30-19:00</div></div>';
 }
 
 function renderAcc(){
@@ -816,7 +1064,7 @@ function renderAcc(){
     [{v:'406€',l:'Flüge'},{v:'650€',l:'Auto'},{v:tot+'€',l:'Unterkünfte'},{v:(406+650+tot)+'€',l:'Gesamt'},{v:off+'€',l:'Offen'}]
     .map(function(s){return '<div class="sb"><div class="sv">'+s.v+'</div><div class="sl">'+s.l+'</div></div>';}).join('')+'</div>';
   ACC.filter(function(a){return a.al;}).forEach(function(a){
-    h+='<div class="card card-red"><b style="color:#e07050;">⚠️ '+a.c+'</b> — Zahlung <b>'+a.due+'</b> ('+a.cost+'€) — bald!</div>';
+    h+='<div class="card card-red"><b style="color:#e07050;">⚠ '+a.c+'</b> -- Zahlung <b>'+a.due+'</b> ('+a.cost+'€) -- bald!</div>';
   });
   h+='<div class="card" style="background:var(--gd);border-color:var(--gb);margin-bottom:10px;">'+
     '<div style="font-size:14px;color:#f0e6d0;">Capital Car Rental via DiscoverCars</div>'+
@@ -839,7 +1087,7 @@ function renderAcc(){
       '<div style="font-size:9px;color:'+(a.due==='bezahlt'?'#6BAF8C':a.al?'#e07050':'var(--m)')+';">'+(a.due==='bezahlt'?'✓ bezahlt':'fällig '+a.due)+'</div></div></div>';
   });
   h+='<div class="card card-green" style="margin-top:10px;"><div class="lbl lgn">Zahlungsplan</div>';
-  [{d:'bezahlt ✅',i:'Flüge+Tirana',c:'#6BAF8C'},{d:'29.05 ⚠️',i:'Himara 195€',c:'#e07050'},{d:'06.06',i:'Lumas 168€',c:'var(--gold)'},{d:'18.06',i:'Gjirokastër 100€',c:'var(--gold)'},{d:'bei Ankunft',i:'Saranda+Laknas',c:'var(--m)'}]
+  [{d:'bezahlt ✅',i:'Flüge+Tirana',c:'#6BAF8C'},{d:'29.05 ⚠',i:'Himara 195€',c:'#e07050'},{d:'06.06',i:'Lumas 168€',c:'var(--gold)'},{d:'18.06',i:'Gjirokastër 100€',c:'var(--gold)'},{d:'bei Ankunft',i:'Saranda+Laknas',c:'var(--m)'}]
   .forEach(function(p){h+='<div class="prow"><div class="pdate" style="color:'+p.c+';">'+p.d+'</div><div style="color:#b0a090;">'+p.i+'</div></div>';});
   h+='</div>';
   return h;
@@ -850,27 +1098,301 @@ function renderWx(){
   WX.forEach(function(w){
     h+='<div class="wc"><div style="min-width:100px;"><div style="font-size:26px;">'+w.i+'</div><div style="font-size:14px;color:#f0e6d0;">'+w.c+'</div><div style="font-size:10px;color:var(--m);font-style:italic;">'+w.d+'</div></div>'+
       '<div style="flex:1;min-width:130px;"><div style="font-size:8px;color:var(--s);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;">Temperatur</div>'+
-      '<div style="display:flex;align-items:center;gap:7px;"><span style="font-size:10px;color:#93c5fd;min-width:24px;">'+w.lo+'°</span>'+
+      '<div style="display:flex;align-items:center;gap:7px;"><span style="font-size:10px;color:#93c5fd;min-width:24px;">'+w.lo+'deg</span>'+
       '<div style="height:7px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;flex:1;"><div style="height:100%;border-radius:4px;background:linear-gradient(90deg,#93c5fd,#f97316);width:'+((w.hi-10)/35*100)+'%;"></div></div>'+
-      '<span style="font-size:12px;color:#f97316;min-width:30px;">'+w.hi+'°C</span></div></div>'+
+      '<span style="font-size:12px;color:#f97316;min-width:30px;">'+w.hi+'degC</span></div></div>'+
       '<div style="display:flex;gap:7px;flex-wrap:wrap;">'+
-      '<div class="ws"><div style="font-size:12px;">☀️</div><div style="font-size:12px;color:var(--gold);">'+w.sun+'h</div><div style="font-size:8px;color:var(--s);">Sonne</div></div>'+
-      '<div class="ws"><div style="font-size:12px;">🌧️</div><div style="font-size:12px;color:var(--gold);">'+w.r+'d</div><div style="font-size:8px;color:var(--s);">Regen</div></div>'+
-      (w.sea?'<div class="ws"><div style="font-size:12px;">🌊</div><div style="font-size:12px;color:var(--gold);">'+w.sea+'°</div><div style="font-size:8px;color:var(--s);">Meer</div></div>':'')+
+      '<div class="ws"><div style="font-size:12px;">☀</div><div style="font-size:12px;color:var(--gold);">'+w.sun+'h</div><div style="font-size:8px;color:var(--s);">Sonne</div></div>'+
+      '<div class="ws"><div style="font-size:12px;">🌧</div><div style="font-size:12px;color:var(--gold);">'+w.r+'d</div><div style="font-size:8px;color:var(--s);">Regen</div></div>'+
+      (w.sea?'<div class="ws"><div style="font-size:12px;">🌊</div><div style="font-size:12px;color:var(--gold);">'+w.sea+'deg</div><div style="font-size:8px;color:var(--s);">Meer</div></div>':'')+
       '</div></div>';
   });
   h+='<div class="card card-green" style="margin-top:8px;"><div class="lbl lgn">Was das bedeutet</div>'+
-    '<div style="font-size:11px;color:#b0a090;line-height:1.8;">🌡️ Landesinnere bis 34°C — Besichtigungen früh morgens<br>🌊 Meer 23–24°C — ab Himara perfekt zum Schwimmen<br>☀️ Bis 12h Sonne — LSF 50+ unverzichtbar<br>💧 2–3L Wasser/Tag — immer Flasche im Auto<br>🏔️ Llogara ~1000m — ca. 8°C kühler als Küste</div></div>';
+    '<div style="font-size:11px;color:#b0a090;line-height:1.8;">🌡 Landesinnere bis 34degC -- Besichtigungen früh morgens<br>🌊 Meer 23-24degC -- ab Himara perfekt zum Schwimmen<br>☀ Bis 12h Sonne -- LSF 50+ unverzichtbar<br>💧 2-3L Wasser/Tag -- immer Flasche im Auto<br>🏔 Llogara ~1000m -- ca. 8degC kühler als Küste</div></div>';
   return h;
 }
 
+// ── CHECKLIST DATA ────────────────────────────────────────────────────────────
+var CHECKLIST = [
+  { cat:'Dokumente', icon:'📄', items:[
+    'Reisepass (gültig)',
+    'Führerschein (beide Fahrer)',
+    'EU-Krankenversicherungskarte (EHIC)',
+    'Kopien aller Dokumente (digital + Papier)',
+    'Mietwagen-Buchungsbestätigung (DiscoverCars)',
+    'Alle Unterkunft-Buchungsbestätigungen',
+    'Reiseversicherungsnachweis',
+    'Kreditkarte (Hauptfahrer, ausreichend Limit)',
+    'Zweite Kreditkarte (Backup)',
+  ]},
+  { cat:'Finanzen', icon:'💰', items:[
+    'Albanische Lek abheben (am Flughafen TIA)',
+    'Bargeld-Notfallreserve separat aufbewahren',
+    'Kreditkartenlimit prüfen (Mietwagenkaution)',
+    'DiscoverCars Pannenhilfe-Nummer gespeichert',
+    'Wechselkurs geprüft (1 EUR ca. 98-100 LEK)',
+  ]},
+  { cat:'Gesundheit & Hygiene', icon:'🧴', items:[
+    'Sonnenschutz LSF 50+ (viel davon!)',
+    'After-Sun Lotion',
+    'Insekten- und Zeckenschutz',
+    'Durchfallmittel (z.B. Imodium)',
+    'Elektrolytpulver',
+    'Schmerzmittel (Ibuprofen/Paracetamol)',
+    'Pflaster und Wunddesinfektionsmittel',
+    'Antihistaminikum (Allergie)',
+    'Persönliche Medikamente (ausreichend)',
+    'Zeckenzange',
+    'Thermometer',
+  ]},
+  { cat:'Kleidung', icon:'👕', items:[
+    'Leichte Sommerkleidung (mind. 7 Outfits)',
+    'Badebekleidung (mind. 2x)',
+    'Strandtuch / Mikrofaser-Handtuch',
+    'Leichte Jacke / Fleece (Llogara-Pass!)',
+    'Festes Schuhwerk / Wanderschuhe',
+    'Flip-Flops / Sandalen',
+    'Wasserschuhe (Osum Canyon!)',
+    'Sonnenhut / Kappe',
+    'Sonnenbrille',
+    'Abendkleidung fur Restaurants',
+  ]},
+  { cat:'Technik & Kommunikation', icon:'📱', items:[
+    'Handy-Ladekabel',
+    'Powerbank (voll geladen)',
+    'KFZ-Ladekabel / Adapter',
+    'Universal-Steckeradapter',
+    'Kopfhörer',
+    'Google Maps offline gespeichert (Albanien)',
+    'Maps.me installiert & Karten geladen',
+    'Albanische SIM-Karte (am Flughafen kaufen)',
+    'Fotos & Dokumente auf Cloud gesichert',
+    'Diese App auf Homescreen installiert',
+  ]},
+  { cat:'Strand & Aktivitäten', icon:'🌊', items:[
+    'Schnorchelausrüstung (optional)',
+    'Unterwasserkamera / Handyhülle wasserdicht',
+    'Rucksack für Tagesausflüge',
+    'Kleiner Tagesrucksack / Strandtasche',
+    'Wasserflaschen (2x pro Person)',
+    'Energieriegel / Snacks für Fahrten',
+    'Bootstouren für Ksamil vorgebucht',
+  ]},
+  { cat:'Auto & Reise', icon:'🚗', items:[
+    'Mietwagen-Abholung: 15.06, 11:30, TIA',
+    'Fahrzeug bei Abholung fotografieren (360 Grad)',
+    'Tankstand bei Abholung notieren',
+    'Internationalen Führerschein dabei',
+    'Pannenhilfe-Nummer offline gespeichert',
+    'Notfalldreieck / Warnweste im Auto prüfen',
+    'Vor Rückgabe tanken (SH60 zum Flughafen)',
+    'Vor Rückgabe Auto fotografieren (360 Grad)',
+  ]},
+  { cat:'Vor Abreise', icon:'🏨', items:[
+    'Himara-Zahlung 29.05 erledigt',
+    'Lumas-Zahlung 06.06 vormerken',
+    'Gjirokastër-Zahlung 18.06 (Anreisetag!)',
+    'Alle Bestätigungen ausgedruckt / gespeichert',
+    'Wohnung / Haus gesichert',
+    'Blumen/Pflanzen versorgt',
+    'Post gestoppt / Briefkasten geleert',
+    'Flug-Check-in erledigt (24h vorher)',
+  ]},
+];
+
+// Checklist state -- stored in sessionStorage
+var clState = {};
+(function(){
+  try{
+    var saved=sessionStorage.getItem('al26cl');
+    if(saved) clState=JSON.parse(saved);
+  }catch(e){}
+})();
+
+function clSave(){
+  try{ sessionStorage.setItem('al26cl', JSON.stringify(clState)); }catch(e){}
+}
+
+function clToggle(id){
+  clState[id] = !clState[id];
+  clSave();
+  var box=document.getElementById('cl-'+id);
+  var row=document.getElementById('clr-'+id);
+  if(box) box.textContent = clState[id] ? '✓' : '';
+  if(row){
+    row.style.opacity = clState[id] ? '0.45' : '1';
+    row.style.textDecoration = clState[id] ? 'line-through' : 'none';
+  }
+  updateClProgress();
+}
+
+function updateClProgress(){
+  var total=0, done=0;
+  CHECKLIST.forEach(function(cat){
+    cat.items.forEach(function(item,i){
+      var id=cat.cat+'-'+i;
+      total++;
+      if(clState[id]) done++;
+    });
+  });
+  var pct=total>0?Math.round(done/total*100):0;
+  var bar=document.getElementById('cl-bar');
+  var lbl=document.getElementById('cl-lbl');
+  if(bar) bar.style.width=pct+'%';
+  if(lbl) lbl.textContent=done+' / '+total+' erledigt ('+pct+'%)';
+}
+
+function clReset(){
+  if(!confirm('Alle Häkchen zurücksetzen?')) return;
+  clState={};
+  clSave();
+  showTab('checklist');
+}
+
+function renderChecklist(){
+  var totalAll=0, doneAll=0;
+  CHECKLIST.forEach(function(cat){
+    cat.items.forEach(function(_,i){ totalAll++; if(clState[cat.cat+'-'+i]) doneAll++; });
+  });
+  var pctAll=totalAll>0?Math.round(doneAll/totalAll*100):0;
+
+  var h=
+    // Progress header
+    '<div class="card" style="margin-bottom:14px;">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'+
+        '<div>'+
+          '<div style="font-size:15px;color:#f0e6d0;">Reise-Packliste</div>'+
+          '<div id="cl-lbl" style="font-size:11px;color:var(--m);margin-top:2px;">'+doneAll+' / '+totalAll+' erledigt ('+pctAll+'%)</div>'+
+        '</div>'+
+        '<button onclick="clReset()" style="background:rgba(224,112,80,0.1);border:1px solid rgba(224,112,80,0.3);color:#e07050;padding:6px 12px;border-radius:8px;font-size:11px;font-family:Georgia,serif;cursor:pointer;">↺ Reset</button>'+
+      '</div>'+
+      '<div style="background:rgba(255,255,255,0.06);border-radius:6px;height:10px;overflow:hidden;">'+
+        '<div id="cl-bar" style="height:100%;border-radius:6px;background:linear-gradient(90deg,#6BAF8C,#C8A96E);transition:width 0.3s;width:'+pctAll+'%;"></div>'+
+      '</div>'+
+    '</div>';
+
+  CHECKLIST.forEach(function(cat){
+    var catTotal=cat.items.length;
+    var catDone=cat.items.filter(function(_,i){ return clState[cat.cat+'-'+i]; }).length;
+    h+='<div class="card" style="margin-bottom:10px;padding:0;overflow:hidden;">'+
+      // Category header
+      '<div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(200,169,110,0.05);border-bottom:1px solid rgba(200,169,110,0.1);">'+
+        '<span style="font-size:18px;">'+cat.icon+'</span>'+
+        '<div style="flex:1;">'+
+          '<div style="font-size:13px;color:#f0e6d0;">'+cat.cat+'</div>'+
+        '</div>'+
+        '<div style="font-size:11px;color:'+(catDone===catTotal?'#6BAF8C':'var(--m)')+';">'+catDone+'/'+catTotal+'</div>'+
+        (catDone===catTotal?'<span style="font-size:14px;">✅</span>':'')+
+      '</div>'+
+      // Items
+      '<div style="padding:6px 0;">';
+
+    cat.items.forEach(function(item, i){
+      var id=cat.cat+'-'+i;
+      var checked=!!clState[id];
+      h+='<div id="clr-'+id+'" onclick="clToggle(\''+id+'\')" style="display:flex;align-items:center;gap:12px;padding:10px 16px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.03);opacity:'+(checked?'0.45':'1')+';text-decoration:'+(checked?'line-through':'none')+';transition:opacity 0.2s;">'+
+        '<div id="cl-'+id+'" style="width:20px;height:20px;border-radius:5px;border:1.5px solid '+(checked?'#6BAF8C':'rgba(200,169,110,0.4)')+';background:'+(checked?'rgba(107,175,140,0.25)':'transparent')+';display:flex;align-items:center;justify-content:center;font-size:12px;color:#6BAF8C;flex-shrink:0;transition:all 0.2s;">'+
+          (checked?'✓':'')+
+        '</div>'+
+        '<div style="font-size:13px;color:#d0c0a8;">'+item+'</div>'+
+      '</div>';
+    });
+
+    h+='</div></div>';
+  });
+
+  return h;
+}
+
+
+function renderExchange(){
+  // Fetch live rate from open exchange API (no key needed for EUR/ALL)
+  var h='<div class="card" style="margin-bottom:14px;" id="fx-card">'+
+    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">'+
+      '<div class="lbl lg" style="margin-bottom:0;">💶 Wechselkurs EUR → LEK</div>'+
+      '<button onclick="fetchRate()" style="background:var(--gd);border:1px solid var(--gb);color:var(--gold);padding:4px 10px;border-radius:8px;font-size:10px;font-family:Georgia,serif;cursor:pointer;">↻ Aktualisieren</button>'+
+    '</div>'+
+    '<div id="fx-display" style="text-align:center;padding:12px 0;">'+
+      '<div style="font-size:11px;color:var(--m);margin-bottom:8px;">Lade aktuellen Kurs...</div>'+
+    '</div>'+
+    '<div id="fx-calc" style="display:none;margin-top:12px;border-top:1px solid rgba(200,169,110,0.15);padding-top:12px;">'+
+      '<div style="font-size:10px;color:var(--m);margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;">Schnellrechner</div>'+
+      '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">'+
+        '<input id="fx-eur" type="number" value="100" min="1" oninput="calcLek()" style="width:90px;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:8px 10px;font-size:15px;color:#f0e6d0;font-family:Georgia,serif;outline:none;"/>'+
+        '<span style="color:var(--gold);font-size:14px;">EUR =</span>'+
+        '<div id="fx-result" style="font-size:20px;color:#f0e6d0;font-weight:300;min-width:80px;"></div>'+
+        '<span style="color:var(--m);font-size:12px;">LEK</span>'+
+      '</div>'+
+      '<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;">'+
+        [10,20,50,100,200,500].map(function(n){
+          return '<button onclick="document.getElementById(\'fx-eur\').value='+n+';calcLek()" style="background:var(--gd);border:1px solid var(--gb);color:var(--m);padding:5px 10px;border-radius:6px;font-size:11px;font-family:Georgia,serif;cursor:pointer;">'+n+'€</button>';
+        }).join('')+
+      '</div>'+
+    '</div>'+
+    '<div style="font-size:9px;color:var(--s);margin-top:10px;font-style:italic;">Quelle: exchangerate-api.com · Kurs kann leicht abweichen</div>'+
+  '</div>';
+  return h;
+}
+
+var fxRate = null;
+
+function fetchRate(){
+  var disp=document.getElementById('fx-display');
+  if(disp) disp.innerHTML='<div style="font-size:11px;color:var(--m);">Lade...</div>';
+  // Use exchangerate-api (free, no key needed for basic)
+  fetch('https://api.exchangerate-api.com/v4/latest/EUR')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      fxRate = data.rates && data.rates.ALL;
+      if(!fxRate) throw new Error('Rate not found');
+      var date = data.date || new Date().toISOString().slice(0,10);
+      var disp2=document.getElementById('fx-display');
+      if(disp2){
+        disp2.innerHTML=
+          '<div style="font-size:36px;color:var(--gold);font-weight:300;line-height:1;">1 EUR = <span style="color:#f0e6d0;">'+fxRate.toFixed(1)+'</span> LEK</div>'+
+          '<div style="font-size:10px;color:var(--m);margin-top:6px;">Stand: '+date+' · 100 LEK ~ '+(100/fxRate).toFixed(2)+'€</div>'+
+          '<div style="font-size:11px;color:#6BAF8C;margin-top:4px;">Geldwechsel: Besten Kurs in Wechselstuben in Tirana finden</div>';
+      }
+      var calc=document.getElementById('fx-calc');
+      if(calc) calc.style.display='block';
+      calcLek();
+    })
+    .catch(function(){
+      // Fallback to approximate fixed rate if API fails
+      fxRate = 98.5;
+      var disp3=document.getElementById('fx-display');
+      if(disp3){
+        disp3.innerHTML=
+          '<div style="font-size:32px;color:var(--gold);font-weight:300;">1 EUR ~ <span style="color:#f0e6d0;">98-100</span> LEK</div>'+
+          '<div style="font-size:10px;color:#e07050;margin-top:6px;">⚠ Kein Internet -- Richtwert (Stand 2025)</div>'+
+          '<div style="font-size:11px;color:var(--m);margin-top:4px;">Aktuellen Kurs im Wechselbüro erfragen</div>';
+      }
+      var calc2=document.getElementById('fx-calc');
+      if(calc2) calc2.style.display='block';
+      calcLek();
+    });
+}
+
+function calcLek(){
+  if(!fxRate) return;
+  var inp=document.getElementById('fx-eur');
+  var res=document.getElementById('fx-result');
+  if(!inp||!res) return;
+  var eur=parseFloat(inp.value)||0;
+  res.textContent=Math.round(eur*fxRate).toLocaleString('de-DE');
+}
+
 function renderTips(){
-  return TIPS.map(function(t){return '<div class="tr"><div class="tc">'+t.c+'</div><div class="tt">'+t.t+'</div></div>';}).join('')+
-    '<div class="card card-green" style="margin-top:8px;"><div class="lbl lgn">Notfallnummern</div>'+
+  var h = renderExchange();
+  h += TIPS.map(function(t){return '<div class="tr"><div class="tc">'+t.c+'</div><div class="tt">'+t.t+'</div></div>';}).join('');
+  h += '<div class="card card-green" style="margin-top:8px;"><div class="lbl lgn">Notfallnummern</div>'+
     '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;font-size:11px;">'+
     [['Notruf Albanien','112'],['Polizei','129'],['DiscoverCars','+1 888 223 5555'],['KH Tirana','+355 4 2222 235']]
-    .map(function(e){return '<div><div style="color:var(--s);font-size:9px;">'+e[0]+'</div><div style="color:#a0c8b0;font-family:monospace;">'+e[1]+'</div></div>';}).join('')+
+    .map(function(e){return '<div><div style="color:var(--s);font-size:9px;">'+e[0]+'</div><a href="tel:'+e[1].replace(/\s/g,'')+'" style="color:#a0c8b0;font-family:monospace;text-decoration:none;">'+e[1]+'</a></div>';}).join('')+
     '</div></div>';
+  // Auto-fetch rate after render
+  setTimeout(fetchRate, 100);
+  return h;
 }
 
 // ── SERVICE WORKER ────────────────────────────────────────────────────────────
