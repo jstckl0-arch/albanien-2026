@@ -148,6 +148,7 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <button class="tab" onclick="showTab('markets')">🛒 Märkte</button>
     <button class="tab" onclick="showTab('language')">🗣️ Albanisch</button>
     <button class="tab" onclick="showTab('exchange')">💶 Kurs</button>
+    <button class="tab" onclick="showTab('expenses')">💸 Ausgaben</button>
     <button class="tab" onclick="showTab('checklist')">✅ Packliste</button>
     <button class="tab" onclick="showTab('tips')">💡 Tipps</button>
   </div>
@@ -970,13 +971,15 @@ tick();
 var openStop = null;
 
 function showTab(id){
+  lastTab = id;
+  try{ sessionStorage.setItem('al26tab', id); }catch(e){}
   document.querySelectorAll('.tab').forEach(function(t){
     t.classList.toggle('active', t.getAttribute('onclick')==="showTab('"+id+"')");
   });
   var c=document.getElementById('ct');
   c.scrollTop=0;
   var html='';
-  if(id==='route')    html=renderRoute();
+  if(id==='route')     html=renderRoute();
   else if(id==='today')    html=renderToday();
   else if(id==='stops')    html=renderStops();
   else if(id==='dist')     html=renderDist();
@@ -985,18 +988,13 @@ function showTab(id){
   else if(id==='map')      html=buildMap();
   else if(id==='markets')  html=renderMarkets();
   else if(id==='language') html=renderLanguage();
-  else if(id==='exchange') { html=renderExchange(); }
-  else if(id==='checklist'){ html=renderChecklist(); }
+  else if(id==='exchange') html=renderExchange();
+  else if(id==='expenses') html=renderExpenses();
+  else if(id==='checklist')html=renderChecklist();
   else if(id==='tips')     html=renderTips();
   c.innerHTML=html;
-  // Auto-fetch exchange rate when tab opens
   if(id==='exchange') setTimeout(fetchRate,100);
-  // Restore map state after re-render
-  if(id==='map' && mapActiveId){
-    var savedId=mapActiveId;
-    mapActiveId=null;
-    mapClick(savedId);
-  }
+  if(id==='map' && mapActiveId){ var sid=mapActiveId; mapActiveId=null; mapClick(sid); }
 }
 
 function toggleStop(id){
@@ -1200,18 +1198,7 @@ var CHECKLIST = [
   ]},
 ];
 
-// Checklist state -- stored in sessionStorage
-var clState = {};
-(function(){
-  try{
-    var saved=sessionStorage.getItem('al26cl');
-    if(saved) clState=JSON.parse(saved);
-  }catch(e){}
-})();
-
-function clSave(){
-  try{ sessionStorage.setItem('al26cl', JSON.stringify(clState)); }catch(e){}
-}
+// Checklist toggle and progress — state managed in INIT section above
 
 function clToggle(id){
   clState[id] = !clState[id];
@@ -1395,12 +1382,22 @@ function renderTips(){
   return h;
 }
 
-// ── SERVICE WORKER ────────────────────────────────────────────────────────────
+// ── SERVICE WORKER — GitHub Pages Fix ────────────────────────────────────────
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js').then(function(){
-    console.log('SW registered');
+  // GitHub Pages hostet unter /repo-name/ — relativer Pfad ist wichtig
+  navigator.serviceWorker.register('./sw.js', {scope: './'}).then(function(reg){
+    console.log('SW registered, scope:', reg.scope);
+    // Sofort updaten wenn neue Version verfügbar
+    reg.addEventListener('updatefound', function(){
+      var newWorker = reg.installing;
+      newWorker.addEventListener('statechange', function(){
+        if(newWorker.state === 'installed' && navigator.serviceWorker.controller){
+          console.log('Neue App-Version verfügbar');
+        }
+      });
+    });
   }).catch(function(e){
-    console.log('SW registration failed (expected on file://):', e.message);
+    console.log('SW nicht registriert (file:// erwartet):', e.message);
   });
 }
 
@@ -1420,8 +1417,201 @@ function installApp(){
 function closeBanner(){document.getElementById('ib').classList.remove('show');}
 window.addEventListener('appinstalled', closeBanner);
 
+// ── AUSGABEN TRACKER ─────────────────────────────────────────────────────────
+var EXPENSE_CATS = [
+  // Albanien & allgemein
+  '🍽️ Essen & Restaurant',
+  '☕ Café & Snacks',
+  '🍦 Eis & Kleinigkeiten',
+  '⛽ Tanken',
+  '🅿️ Parken',
+  '🚗 Transport & Taxi',
+  '🚌 Öffentl. Transport',
+  '🚢 Touren & Boote',
+  '🌊 Strand (Liegen/Schirm)',
+  '📸 Eintritte & Museen',
+  '🏨 Unterkunft',
+  '🛒 Supermarkt & Einkaufen',
+  '🎁 Souvenirs & Märkte',
+  '💊 Apotheke & Gesundheit',
+  '🧴 Drogerie & Pflege',
+  '🧺 Wäsche',
+  '📱 SIM & Daten',
+  '💱 Wechsel & Bankgebühren',
+  '✈️ Flüge & Transfer',
+  // Thailand / Japan / weitere Reisen
+  '🏋️ Massage & Wellness',
+  '🎭 Unterhaltung & Events',
+  '🍜 Street Food',
+  '🛕 Tempel & Kulturstätten',
+  '🤿 Sport & Aktivitäten',
+  '📚 Bücher & Guides',
+  '💉 Impfung & Reisemedizin',
+  '📦 Sonstiges',
+];
+var TRIP_DAYS = [];
+(function(){
+  var start = new Date('2026-06-12'), end = new Date('2026-06-26');
+  for(var d = new Date(start); d <= end; d.setDate(d.getDate()+1)){
+    TRIP_DAYS.push(new Date(d).toISOString().slice(0,10));
+  }
+})();
+
+// Ausgaben in localStorage (dauerhaft!)
+var expenses = {};
+(function(){
+  try{ var s=localStorage.getItem('al26exp'); if(s) expenses=JSON.parse(s); }catch(e){}
+})();
+function expSave(){ try{localStorage.setItem('al26exp',JSON.stringify(expenses));}catch(e){} }
+
+function addExpense(){
+  var date=document.getElementById('exp-date').value;
+  var cat=document.getElementById('exp-cat').value;
+  var amt=parseFloat(document.getElementById('exp-amt').value);
+  var desc=document.getElementById('exp-desc').value.trim();
+  if(!date||!amt||amt<=0) return;
+  if(!expenses[date]) expenses[date]=[];
+  expenses[date].push({cat:cat, amt:amt, desc:desc||cat, id:Date.now()});
+  expSave();
+  document.getElementById('exp-amt').value='';
+  document.getElementById('exp-desc').value='';
+  renderExpenseList();
+  updateExpenseSummary();
+}
+
+function delExpense(date, id){
+  if(!expenses[date]) return;
+  expenses[date]=expenses[date].filter(function(e){return e.id!==id;});
+  expSave();
+  renderExpenseList();
+  updateExpenseSummary();
+}
+
+function renderExpenseList(){
+  var date=document.getElementById('exp-date').value||new Date().toISOString().slice(0,10);
+  var list=document.getElementById('exp-list');
+  if(!list) return;
+  var items=expenses[date]||[];
+  if(items.length===0){
+    list.innerHTML='<div style="font-size:12px;color:var(--s);font-style:italic;padding:8px 0;">Noch keine Ausgaben für diesen Tag</div>';
+    return;
+  }
+  var total=items.reduce(function(s,e){return s+e.amt;},0);
+  list.innerHTML=items.map(function(e){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05);">'+
+      '<span style="font-size:14px;">'+e.cat.split(' ')[0]+'</span>'+
+      '<div style="flex:1;"><div style="font-size:12px;color:#f0e6d0;">'+e.desc+'</div><div style="font-size:10px;color:var(--m);">'+e.cat+'</div></div>'+
+      '<div style="font-size:14px;color:var(--gold);font-weight:300;">'+e.amt.toFixed(2)+'€</div>'+
+      '<button onclick="delExpense(\''+date+'\','+e.id+')" style="background:none;border:none;color:var(--s);cursor:pointer;font-size:14px;padding:0 4px;">✕</button>'+
+    '</div>';
+  }).join('')+
+  '<div style="display:flex;justify-content:space-between;padding:10px 0 4px;font-size:13px;"><span style="color:var(--m);">Gesamt heute</span><span style="color:var(--gold);">'+total.toFixed(2)+'€</span></div>';
+}
+
+function updateExpenseSummary(){
+  var summary=document.getElementById('exp-summary');
+  if(!summary) return;
+  var grandTotal=0, byDay={}, byCat={};
+  EXPENSE_CATS.forEach(function(c){byCat[c]=0;});
+  Object.keys(expenses).forEach(function(date){
+    var dayTotal=0;
+    (expenses[date]||[]).forEach(function(e){
+      grandTotal+=e.amt; dayTotal+=e.amt;
+      byCat[e.cat]=(byCat[e.cat]||0)+e.amt;
+    });
+    if(dayTotal>0) byDay[date]=dayTotal;
+  });
+  var days=Object.keys(byDay).length||1;
+  summary.innerHTML=
+    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">'+
+    [
+      {v:grandTotal.toFixed(0)+'€', l:'Gesamt'},
+      {v:(grandTotal/2).toFixed(0)+'€', l:'Pro Person'},
+      {v:(grandTotal/days).toFixed(0)+'€', l:'Pro Tag'},
+    ].map(function(s){return '<div class="sb"><div class="sv">'+s.v+'</div><div class="sl">'+s.l+'</div></div>';}).join('')+
+    '</div>'+
+    '<div style="font-size:10px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Nach Kategorie</div>'+
+    EXPENSE_CATS.map(function(cat){
+      var amt=byCat[cat]||0;
+      var pct=grandTotal>0?Math.round(amt/grandTotal*100):0;
+      return amt>0?'<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">'+
+        '<span style="font-size:11px;min-width:20px;">'+cat.split(' ')[0]+'</span>'+
+        '<div style="flex:1;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;">'+
+          '<div style="height:100%;background:var(--gold);border-radius:3px;width:'+pct+'%;"></div></div>'+
+        '<span style="font-size:11px;color:var(--m);min-width:50px;text-align:right;">'+amt.toFixed(0)+'€ ('+pct+'%)</span>'+
+      '</div>':'';
+    }).join('');
+}
+
+function renderExpenses(){
+  var today=new Date().toISOString().slice(0,10);
+  var inTrip=TRIP_DAYS.includes(today);
+  var defDate=inTrip?today:TRIP_DAYS[0];
+  var h=
+    '<div style="font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;">Ausgaben-Tracker</div>'+
+    // Input form
+    '<div class="card" style="margin-bottom:12px;">'+
+      '<div class="lbl lg">Ausgabe hinzufügen</div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">'+
+        '<input id="exp-date" type="date" value="'+defDate+'" min="'+TRIP_DAYS[0]+'" max="'+TRIP_DAYS[TRIP_DAYS.length-1]+'" onchange="renderExpenseList()" '+
+          'style="flex:1;min-width:130px;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:13px;color:#f0e6d0;font-family:Georgia,serif;outline:none;"/>'+
+        '<select id="exp-cat" style="flex:1;min-width:130px;background:#1a1208;border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:13px;color:#f0e6d0;font-family:Georgia,serif;outline:none;">'+
+          EXPENSE_CATS.map(function(c){return '<option>'+c+'</option>';}).join('')+
+        '</select>'+
+      '</div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;">'+
+        '<input id="exp-amt" type="number" placeholder="Betrag in €" step="0.01" min="0" '+
+          'style="flex:1;min-width:110px;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:15px;color:#f0e6d0;font-family:Georgia,serif;outline:none;" '+
+          'onkeydown="if(event.key===\'Enter\')addExpense()"/>'+
+        '<input id="exp-desc" type="text" placeholder="Beschreibung (optional)" '+
+          'style="flex:2;min-width:160px;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:13px;color:#f0e6d0;font-family:Georgia,serif;outline:none;" '+
+          'onkeydown="if(event.key===\'Enter\')addExpense()"/>'+
+        '<button onclick="addExpense()" style="background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-family:Georgia,serif;cursor:pointer;">+</button>'+
+      '</div>'+
+    '</div>'+
+    // Day list
+    '<div class="card" style="margin-bottom:12px;">'+
+      '<div class="lbl lg">Ausgaben des Tages</div>'+
+      '<div id="exp-list"></div>'+
+    '</div>'+
+    // Summary
+    '<div class="card card-green">'+
+      '<div class="lbl lgn">Gesamtübersicht</div>'+
+      '<div id="exp-summary"></div>'+
+    '</div>';
+
+  setTimeout(function(){
+    renderExpenseList();
+    updateExpenseSummary();
+  }, 50);
+  return h;
+}
+
+// ── PERSISTENZ — localStorage für alles Wichtige ─────────────────────────────
+// Packliste: sessionStorage → localStorage (dauerhaft)
+var clState = {};
+(function(){
+  try{
+    // Erst localStorage versuchen (dauerhaft), dann sessionStorage (Legacy)
+    var s=localStorage.getItem('al26cl')||sessionStorage.getItem('al26cl');
+    if(s) clState=JSON.parse(s);
+  }catch(e){}
+})();
+function clSave(){
+  try{
+    localStorage.setItem('al26cl', JSON.stringify(clState));
+    sessionStorage.setItem('al26cl', JSON.stringify(clState));
+  }catch(e){}
+}
+
+// Tab-State: letzten aktiven Tab merken
+var lastTab = 'route';
+(function(){
+  try{ var t=sessionStorage.getItem('al26tab'); if(t) lastTab=t; }catch(e){}
+})();
+
 // ── INIT ─────────────────────────────────────────────────────────────────────
-showTab('route');
+showTab(lastTab);
 </script>
 </body>
 </html>
