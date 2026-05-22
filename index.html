@@ -1469,12 +1469,16 @@ function addExpense(){
   var cat=document.getElementById('exp-cat').value;
   var amt=parseFloat(document.getElementById('exp-amt').value);
   var desc=document.getElementById('exp-desc').value.trim();
+  var note=document.getElementById('exp-note').value.trim();
+  var loc=document.getElementById('exp-loc').value.trim();
   if(!date||!amt||amt<=0) return;
   if(!expenses[date]) expenses[date]=[];
-  expenses[date].push({cat:cat, amt:amt, desc:desc||cat, id:Date.now()});
+  expenses[date].push({cat:cat, amt:amt, desc:desc||cat, note:note, loc:loc, id:Date.now()});
   expSave();
   document.getElementById('exp-amt').value='';
   document.getElementById('exp-desc').value='';
+  document.getElementById('exp-note').value='';
+  document.getElementById('exp-loc').value='';
   renderExpenseList();
   updateExpenseSummary();
 }
@@ -1498,14 +1502,38 @@ function renderExpenseList(){
   }
   var total=items.reduce(function(s,e){return s+e.amt;},0);
   list.innerHTML=items.map(function(e){
-    return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05);">'+
-      '<span style="font-size:14px;">'+e.cat.split(' ')[0]+'</span>'+
-      '<div style="flex:1;"><div style="font-size:12px;color:#f0e6d0;">'+e.desc+'</div><div style="font-size:10px;color:var(--m);">'+e.cat+'</div></div>'+
-      '<div style="font-size:14px;color:var(--gold);font-weight:300;">'+e.amt.toFixed(2)+'€</div>'+
-      '<button onclick="delExpense(\''+date+'\','+e.id+')" style="background:none;border:none;color:var(--s);cursor:pointer;font-size:14px;padding:0 4px;">✕</button>'+
+    return '<div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);">'+
+      '<div style="display:flex;align-items:flex-start;gap:10px;">'+
+        '<span style="font-size:16px;flex-shrink:0;margin-top:1px;">'+e.cat.split(' ')[0]+'</span>'+
+        '<div style="flex:1;">'+
+          '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'+
+            '<div>'+
+              '<div style="font-size:13px;color:#f0e6d0;font-weight:400;">'+e.desc+'</div>'+
+              '<div style="font-size:10px;color:var(--m);margin-top:1px;">'+e.cat+'</div>'+
+            '</div>'+
+            '<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">'+
+              '<div style="font-size:15px;color:var(--gold);font-weight:300;">'+e.amt.toFixed(2)+'€</div>'+
+              '<button onclick="delExpense(\''+date+'\','+e.id+')" style="background:none;border:none;color:var(--s);cursor:pointer;font-size:14px;padding:2px 4px;line-height:1;">✕</button>'+
+            '</div>'+
+          '</div>'+
+          // Location badge
+          (e.loc ? '<div style="display:inline-flex;align-items:center;gap:4px;background:rgba(200,169,110,0.08);border:1px solid rgba(200,169,110,0.2);border-radius:6px;padding:3px 8px;margin-top:5px;margin-right:6px;">'+
+            '<span style="font-size:9px;">📍</span>'+
+            '<span style="font-size:10px;color:var(--gold);">'+e.loc+'</span>'+
+          '</div>' : '')+
+          // Note badge
+          (e.note ? '<div style="display:inline-flex;align-items:center;gap:4px;background:rgba(107,175,140,0.06);border:1px solid rgba(107,175,140,0.2);border-radius:6px;padding:3px 8px;margin-top:5px;">'+
+            '<span style="font-size:9px;">📝</span>'+
+            '<span style="font-size:10px;color:#a0b898;font-style:italic;">'+e.note+'</span>'+
+          '</div>' : '')+
+        '</div>'+
+      '</div>'+
     '</div>';
   }).join('')+
-  '<div style="display:flex;justify-content:space-between;padding:10px 0 4px;font-size:13px;"><span style="color:var(--m);">Gesamt heute</span><span style="color:var(--gold);">'+total.toFixed(2)+'€</span></div>';
+  '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 4px;border-top:1px solid rgba(200,169,110,0.2);margin-top:4px;">'+
+    '<span style="font-size:12px;color:var(--m);">Gesamt heute</span>'+
+    '<span style="font-size:16px;color:var(--gold);font-weight:300;">'+total.toFixed(2)+'€</span>'+
+  '</div>';
 }
 
 function updateExpenseSummary(){
@@ -1547,34 +1575,49 @@ function renderExpenses(){
   var today=new Date().toISOString().slice(0,10);
   var inTrip=TRIP_DAYS.includes(today);
   var defDate=inTrip?today:TRIP_DAYS[0];
+  var inputStyle='background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:13px;color:#f0e6d0;font-family:Georgia,serif;outline:none;width:100%;';
   var h=
     '<div style="font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;">Ausgaben-Tracker</div>'+
-    // Input form
     '<div class="card" style="margin-bottom:12px;">'+
       '<div class="lbl lg">Ausgabe hinzufügen</div>'+
-      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">'+
+      // Row 1: Date + Category
+      '<div style="display:flex;gap:8px;margin-bottom:8px;">'+
         '<input id="exp-date" type="date" value="'+defDate+'" min="'+TRIP_DAYS[0]+'" max="'+TRIP_DAYS[TRIP_DAYS.length-1]+'" onchange="renderExpenseList()" '+
-          'style="flex:1;min-width:130px;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:13px;color:#f0e6d0;font-family:Georgia,serif;outline:none;"/>'+
-        '<select id="exp-cat" style="flex:1;min-width:130px;background:#1a1208;border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:13px;color:#f0e6d0;font-family:Georgia,serif;outline:none;">'+
+          'style="flex:1;'+inputStyle+'"/>'+
+        '<select id="exp-cat" style="flex:1;background:#1a1208;border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:12px;color:#f0e6d0;font-family:Georgia,serif;outline:none;">'+
           EXPENSE_CATS.map(function(c){return '<option>'+c+'</option>';}).join('')+
         '</select>'+
       '</div>'+
-      '<div style="display:flex;gap:8px;flex-wrap:wrap;">'+
-        '<input id="exp-amt" type="number" placeholder="Betrag in €" step="0.01" min="0" '+
-          'style="flex:1;min-width:110px;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:15px;color:#f0e6d0;font-family:Georgia,serif;outline:none;" '+
-          'onkeydown="if(event.key===\'Enter\')addExpense()"/>'+
-        '<input id="exp-desc" type="text" placeholder="Beschreibung (optional)" '+
-          'style="flex:2;min-width:160px;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:13px;color:#f0e6d0;font-family:Georgia,serif;outline:none;" '+
-          'onkeydown="if(event.key===\'Enter\')addExpense()"/>'+
-        '<button onclick="addExpense()" style="background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-family:Georgia,serif;cursor:pointer;">+</button>'+
+      // Row 2: Amount + Description
+      '<div style="display:flex;gap:8px;margin-bottom:8px;">'+
+        '<input id="exp-amt" type="number" placeholder="Betrag €" step="0.01" min="0" '+
+          'style="flex:1;min-width:90px;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:15px;color:#f0e6d0;font-family:Georgia,serif;outline:none;" '+
+          'onkeydown="if(event.key===\'Enter\')document.getElementById(\'exp-loc\').focus()"/>'+
+        '<input id="exp-desc" type="text" placeholder="Bezeichnung (z.B. Mittagessen)" '+
+          'style="flex:2;min-width:120px;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:13px;color:#f0e6d0;font-family:Georgia,serif;outline:none;" '+
+          'onkeydown="if(event.key===\'Enter\')document.getElementById(\'exp-loc\').focus()"/>'+
       '</div>'+
+      // Row 3: Location
+      '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">'+
+        '<span style="font-size:14px;flex-shrink:0;">📍</span>'+
+        '<input id="exp-loc" type="text" placeholder="Ort (z.B. Restaurant Tymi, Saranda Promenade)" '+
+          'style="flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:12px;color:#f0e6d0;font-family:Georgia,serif;outline:none;" '+
+          'onkeydown="if(event.key===\'Enter\')document.getElementById(\'exp-note\').focus()"/>'+
+      '</div>'+
+      // Row 4: Note + Add button
+      '<div style="display:flex;gap:8px;align-items:center;">'+
+        '<span style="font-size:14px;flex-shrink:0;">📝</span>'+
+        '<input id="exp-note" type="text" placeholder="Notiz (z.B. sehr gut, nochmal hingehen!)" '+
+          'style="flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--gb);border-radius:8px;padding:9px;font-size:12px;color:#f0e6d0;font-family:Georgia,serif;outline:none;" '+
+          'onkeydown="if(event.key===\'Enter\')addExpense()"/>'+
+        '<button onclick="addExpense()" style="background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;padding:10px 20px;font-size:15px;font-family:Georgia,serif;cursor:pointer;flex-shrink:0;">+</button>'+
+      '</div>'+
+      '<div style="font-size:9px;color:var(--s);margin-top:8px;font-style:italic;">Enter springt zum nächsten Feld · letztes Enter speichert</div>'+
     '</div>'+
-    // Day list
     '<div class="card" style="margin-bottom:12px;">'+
       '<div class="lbl lg">Ausgaben des Tages</div>'+
       '<div id="exp-list"></div>'+
     '</div>'+
-    // Summary
     '<div class="card card-green">'+
       '<div class="lbl lgn">Gesamtübersicht</div>'+
       '<div id="exp-summary"></div>'+
